@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأستاذة هاجر بوشن - مادة الرياضيات | Prof Hajar Bochenne</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hajar: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            200: '#f5d0fe',
+                            300: '#f0abfc',
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                            700: '#a21caf',
+                            800: '#86198f',
+                            900: '#701a75',
+                            soft: '#9d4edd',
+                            accent: '#f43f5e'
+                        }
+                    },
+                    fontFamily: {
+                        tajawal: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 208, 254, 0.5);
+        }
+        .glass-dark {
+            background: rgba(112, 26, 117, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #a21caf, #d946ef, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background: radial-gradient(circle at 10% 20%, rgba(217, 70, 239, 0.12) 0%, rgba(162, 28, 175, 0.05) 90%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-hajar-500 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 glass-card border-b border-purple-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="scrollToTop()">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-hajar-700 via-hajar-600 to-fuchsia-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-fuchsia-500/20 transform hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-square-root-variable text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg sm:text-xl font-black text-slate-900 tracking-tight block">الأستاذة هاجر بوشن</span>
+                        <span class="text-xs font-bold text-hajar-600 tracking-wider">Prof Hajar Bochenne - مادة الرياضيات</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-1 space-x-reverse font-medium text-slate-700 text-sm">
+                    <a href="#home" class="px-3.5 py-2 rounded-xl text-hajar-700 bg-hajar-100 font-bold transition">الرئيسية</a>
+                    <a href="#about" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">عن الأستاذة</a>
+                    <a href="#levels" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">المراحل التعليمية</a>
+                    <a href="#resources" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">الدروس والسلاسل</a>
+                    <a href="#quiz" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">اختبار تفاعلي</a>
+                    <a href="#contact" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">تواصل معنا</a>
+                </nav>
+
+                <!-- Auth / User Profile Header Section -->
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <!-- Shown when LOGGED OUT -->
+                    <div id="auth-logged-out" class="flex items-center space-x-2 space-x-reverse">
+                        <button onclick="openAuthModal('login')" class="bg-gradient-to-r from-hajar-600 to-purple-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md shadow-hajar-500/20 hover:shadow-lg transition text-xs sm:text-sm flex items-center">
+                            <i class="fa-solid fa-right-to-bracket ml-2"></i>
+                            <span>دخول التلاميذ</span>
+                        </button>
+                    </div>
+
+                    <!-- Shown when LOGGED IN -->
+                    <div id="auth-logged-in" class="hidden flex items-center space-x-3 space-x-reverse">
+                        <div class="flex items-center space-x-2 space-x-reverse bg-hajar-50 p-1.5 px-3 rounded-2xl border border-hajar-200 cursor-pointer" onclick="openProfileModal()">
+                            <img id="user-avatar" src="https://placehold.co/100x100/701a75/ffffff?text=U" alt="User" class="w-8 h-8 rounded-xl object-cover border border-hajar-300">
+                            <div class="text-right hidden sm:block">
+                                <span id="user-display-name" class="block text-xs font-bold text-slate-900 leading-tight">اسم التلميذ</span>
+                                <span id="user-score-badge" class="block text-[10px] font-bold text-hajar-600">🏆 0 نقطة</span>
+                            </div>
+                        </div>
+                        <button onclick="handleLogout()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 flex items-center justify-center transition border border-slate-200" title="تسجيل الخروج">
+                            <i class="fa-solid fa-power-off text-sm"></i>
+                        </button>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <div class="lg:hidden flex items-center">
+                        <button id="mobile-menu-btn" class="p-2.5 rounded-xl text-slate-700 hover:text-hajar-700 hover:bg-hajar-50 focus:outline-none">
+                            <i class="fa-solid fa-bars text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-hajar-100 px-4 pt-2 pb-6 space-y-2">
+            <a href="#home" class="mobile-link block px-4 py-2.5 rounded-xl text-hajar-700 font-bold bg-hajar-50">الرئيسية</a>
+            <a href="#about" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">عن الأستاذة</a>
+            <a href="#levels" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">المراحل التعليمية</a>
+            <a href="#resources" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">الدروس والسلاسل</a>
+            <a href="#quiz" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">اختبار تفاعلي</a>
+            <a href="#contact" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">تواصل معنا</a>
+            <a href="https://youtube.com" target="_blank" class="flex items-center justify-center space-x-2 space-x-reverse bg-red-600 text-white py-3 rounded-xl font-bold mt-4">
+                <i class="fa-brands fa-youtube"></i>
+                <span>قناة اليوتيوب</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative overflow-hidden pt-10 pb-16 md:py-24 hero-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Left Text Content -->
+                <div class="space-y-6 text-center md:text-right">
+                    <div class="inline-flex items-center space-x-2 space-x-reverse bg-hajar-100 text-hajar-800 border border-hajar-200 px-4 py-2 rounded-full text-xs sm:text-sm font-bold">
+                        <span class="flex h-2.5 w-2.5 rounded-full bg-hajar-500 animate-ping"></span>
+                        <span>مرحباً بكم في منصة الأستاذة هاجر بوشن التفاعلية</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
+                        طريقك نحو التميز والعلامة الكاملة في <span class="gradient-text">الرياضيات</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-xl mx-auto md:mx-0">
+                        مع الأستاذة **هاجر بوشن**، نبسّط لك أعقد الأفكار الرياضية بشرح خطوة بخطوة. سجل حسابك للوصول إلى السلاسل الحصرية، وتتبع نقاطك واختباراتك التفاعلية!
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
+                        <a href="#resources" class="inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-gradient-to-r from-hajar-600 to-purple-700 text-white font-bold text-base shadow-lg shadow-hajar-500/25 hover:shadow-hajar-500/40 hover:-translate-y-0.5 transition duration-200">
+                            <i class="fa-solid fa-book-open ml-2.5"></i>
+                            تصفح الدروس والسلاسل
+                        </a>
+                        <button onclick="openAuthModal('signup')" class="inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white border border-hajar-200 text-slate-800 font-bold text-base hover:bg-hajar-50 hover:border-hajar-300 transition duration-200 shadow-sm">
+                            <i class="fa-solid fa-user-plus text-hajar-600 ml-2.5"></i>
+                            أنشئ حسابك الآن
+                        </button>
+                    </div>
+
+                    <!-- Stats Quick View -->
+                    <div class="pt-8 grid grid-cols-3 gap-4 border-t border-purple-100 max-w-md mx-auto md:mx-0">
+                        <div class="bg-white/60 backdrop-blur-sm p-3 rounded-2xl border border-purple-50">
+                            <div class="text-2xl sm:text-3xl font-black text-hajar-700">+45,000</div>
+                            <div class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1">تلميذ مستفيد</div>
+                        </div>
+                        <div class="bg-white/60 backdrop-blur-sm p-3 rounded-2xl border border-purple-50">
+                            <div class="text-2xl sm:text-3xl font-black text-hajar-700">+180</div>
+                            <div class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1">سلسلة وملخص PDF</div>
+                        </div>
+                        <div class="bg-white/60 backdrop-blur-sm p-3 rounded-2xl border border-purple-50">
+                            <div class="text-2xl sm:text-3xl font-black text-fuchsia-600">20/20</div>
+                            <div class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1">هدفنا الدائم</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card Visual -->
+                <div class="relative flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <!-- Decorative Shapes -->
+                        <div class="absolute -top-6 -left-6 w-32 h-32 bg-fuchsia-300/40 rounded-full blur-2xl"></div>
+                        <div class="absolute -bottom-6 -right-6 w-40 h-40 bg-purple-300/40 rounded-full blur-2xl"></div>
+
+                        <!-- Card Frame -->
+                        <div class="relative bg-gradient-to-b from-white to-hajar-50/60 rounded-3xl p-6 shadow-2xl border border-hajar-100">
+                            <div class="aspect-square rounded-2xl bg-gradient-to-tr from-hajar-800 via-hajar-600 to-purple-600 relative overflow-hidden flex items-center justify-center shadow-inner">
+                                <img src="https://placehold.co/500x500/701a75/ffffff?text=Prof.+Hajar+Bochenne&font=tajawal" alt="الأستاذة هاجر بوشن" class="w-full h-full object-cover rounded-2xl mix-blend-overlay opacity-90">
+                                
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center">
+                                    <div class="w-28 h-28 rounded-full border-4 border-white/30 p-1 mb-4 shadow-lg backdrop-blur-md bg-white/10 flex items-center justify-center">
+                                        <div class="w-full h-full rounded-full bg-white text-hajar-700 flex items-center justify-center text-4xl font-extrabold shadow-md">
+                                            <i class="fa-solid fa-graduation-cap"></i>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-2xl font-black">الأستاذة هاجر بوشن</h3>
+                                    <p class="text-fuchsia-100 font-medium text-sm mt-1">Professeur de Mathématiques</p>
+                                    
+                                    <div class="mt-4 inline-flex items-center space-x-2 space-x-reverse bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold">
+                                        <i class="fa-solid fa-star text-amber-300"></i>
+                                        <span>منصة التعليم التفاعلية الذكية</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Prof Section -->
+    <section id="about" class="py-16 bg-white border-y border-purple-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-hajar-50 via-purple-50 to-fuchsia-50 rounded-3xl p-8 sm:p-12 border border-hajar-100/80 shadow-sm relative overflow-hidden">
+                <div class="grid md:grid-cols-3 gap-8 items-center relative z-10">
+                    <div class="md:col-span-1 flex justify-center">
+                        <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-3xl bg-gradient-to-tr from-hajar-700 to-purple-600 flex items-center justify-center text-white text-6xl shadow-xl shadow-hajar-500/20">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 text-center md:text-right space-y-4">
+                        <span class="text-hajar-700 font-bold text-xs tracking-wider uppercase bg-white border border-hajar-200 px-3.5 py-1.5 rounded-full">نبذة عن المنصة</span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">تعليم تفاعلي مخصص لكل تلميذ</h2>
+                        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                            تسعى الأستاذة **هاجر بوشن** لتوفير تجربة تعليمية فريدة تُمكّن التلاميذ من بناء أساس رياضيات قوي، تتبع نتيجتهم في الاختبارات التفاعلية، وحفظ الملفات الدراسية مباشرة في حساباتهم الشغوفة للنجاح.
+                        </p>
+                        <div class="flex flex-wrap gap-3 pt-2 justify-center md:justify-start text-xs font-bold">
+                            <span class="bg-white text-hajar-800 px-3 py-1.5 rounded-xl border border-hajar-200 shadow-sm"><i class="fa-solid fa-circle-check text-hajar-500 ml-1"></i> تسجيل دخول سريع وآمن</span>
+                            <span class="bg-white text-hajar-800 px-3 py-1.5 rounded-xl border border-hajar-200 shadow-sm"><i class="fa-solid fa-circle-check text-hajar-500 ml-1"></i> حفظ نتائج التحديات تلقائياً</span>
+                            <span class="bg-white text-hajar-800 px-3 py-1.5 rounded-xl border border-hajar-200 shadow-sm"><i class="fa-solid fa-circle-check text-hajar-500 ml-1"></i> محتوى حصري للمشتركين</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academic Levels Section -->
+    <section id="levels" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-hajar-700 font-bold text-xs tracking-wider uppercase bg-hajar-100 px-4 py-1.5 rounded-full">المستويات التعليمية</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">اختر مستواك الدراسي</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">تم تقسيم المحتوى التعليمي بعناية لتلبية احتياجات كل مستوى دراسي.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- BAC -->
+                <div class="group relative bg-white rounded-3xl p-8 border border-purple-100 hover:border-hajar-400 hover:shadow-xl transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-2xl font-black mb-6">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <span class="text-xs font-bold text-hajar-700 bg-hajar-50 px-3 py-1 rounded-full">قسم البكالوريا (BAC)</span>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-3 mb-2">تحضير البكالوريا</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            سلاسل تمارينية، باكلوريات أجنبية ومحلية محلولة بالتفصيل، وملخصات شاملة للأفكار الأساسية والمتقدمة.
+                        </p>
+                    </div>
+                    <a href="#resources" onclick="filterResources('bac')" class="w-full py-3.5 rounded-xl bg-slate-900 text-white font-bold text-center block hover:bg-hajar-600 transition text-xs sm:text-sm">تصفح مواد البكالوريا</a>
+                </div>
+
+                <!-- 2AS -->
+                <div class="group relative bg-white rounded-3xl p-8 border border-purple-100 hover:border-hajar-400 hover:shadow-xl transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-2xl font-black mb-6">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                        </div>
+                        <span class="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1 rounded-full">التعليم الثانوي</span>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-3 mb-2">السنة الثانية ثانوي</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            بناء القاعدة الرياضية الصلبة في الاشتقاقية، الدوال، والاحتمالات للتحضير السلس للسنة النهائية.
+                        </p>
+                    </div>
+                    <a href="#resources" onclick="filterResources('secondary2')" class="w-full py-3.5 rounded-xl bg-slate-900 text-white font-bold text-center block hover:bg-hajar-600 transition text-xs sm:text-sm">تصفح السنة الثانية</a>
+                </div>
+
+                <!-- 1AS -->
+                <div class="group relative bg-white rounded-3xl p-8 border border-purple-100 hover:border-hajar-400 hover:shadow-xl transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl font-black mb-6">
+                            <i class="fa-solid fa-shapes"></i>
+                        </div>
+                        <span class="text-xs font-bold text-pink-700 bg-pink-50 px-3 py-1 rounded-full">التعليم الثانوي</span>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-3 mb-2">السنة الأولى ثانوي</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            مرافقة التلاميذ في الانتقال للطور الثانوي وتثبيت المفاهيم الهندسية والتحليلية من البداية.
+                        </p>
+                    </div>
+                    <a href="#resources" onclick="filterResources('secondary1')" class="w-full py-3.5 rounded-xl bg-slate-900 text-white font-bold text-center block hover:bg-hajar-600 transition text-xs sm:text-sm">تصفح السنة الأولى</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-hajar-700 font-bold text-xs tracking-wider uppercase bg-hajar-100 px-4 py-1.5 rounded-full">المكتبة التعليمية الحصرية</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">السلاسل والملخصات (PDF)</h2>
+                    <p class="text-slate-600 mt-2 text-sm sm:text-base">سجل دخولك لتتمكن من معاينة وتحميل الحلول والسلاسل الخاصة بالأستاذة.</p>
+                </div>
+
+                <!-- Filter Tab Buttons -->
+                <div class="flex flex-wrap gap-2 mt-6 md:mt-0 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+                    <button onclick="filterResources('all')" class="filter-btn active-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition">الكل</button>
+                    <button onclick="filterResources('bac')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition">البكالوريا</button>
+                    <button onclick="filterResources('secondary2')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition">2 ثانوي</button>
+                    <button onclick="filterResources('secondary1')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition">1 ثانوي</button>
+                </div>
+            </div>
+
+            <!-- Resource Cards Grid -->
+            <div id="resource-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Free PDF -->
+                <div class="resource-item bac bg-slate-50 rounded-2xl p-6 border border-purple-100 hover:shadow-lg transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock-open ml-1"></i> مجاني للجميع</span>
+                    </div>
+                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">سلسلة المتتاليات العددية (الجزء الأول)</h4>
+                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">سلسلة متكاملة تشمل تمارين البرهان بالتراجع والتعامل مع الحدود.</p>
+                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
+                        <span class="text-[11px] font-semibold text-slate-400">الحجم: 2.7 ميغابايت</span>
+                        <button onclick="openPdfModal('سلسلة المتتاليات العددية', 'سلسلة مجانية متوفرة للجميع للتحميل والمعاينة المباشرة.')" class="px-3.5 py-2 rounded-xl bg-hajar-100 text-hajar-700 hover:bg-hajar-600 hover:text-white font-bold text-xs transition flex items-center">
+                            <i class="fa-solid fa-download ml-1.5"></i> معاينة / تحميل
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Protected VIP PDF 1 -->
+                <div class="resource-item bac bg-purple-50/50 rounded-2xl p-6 border border-hajar-200 hover:shadow-lg transition relative overflow-hidden">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-file-shield"></i>
+                        </div>
+                        <span class="text-xs font-bold text-hajar-800 bg-hajar-200 px-3 py-1 rounded-full"><i class="fa-solid fa-lock ml-1"></i> محتوى للمسجلين</span>
+                    </div>
+                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">الحل النموذجي المميّز للدوال الأسية واللوغاريتمية</h4>
+                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">شرح وحل تفصيلي بالخطوات لسلاسل الدوال الشاملة مع سلم التنقيط.</p>
+                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
+                        <span class="text-[11px] font-semibold text-slate-400">خاص بالمسجلين</span>
+                        <button onclick="protectedAction('الحل النموذجي للدوال الأسية', 'ملف حائل يشتمل على الحل المنهجي لكافة تمارين الدوال الأسية واللوغاريتمية.')" class="px-3.5 py-2 rounded-xl bg-hajar-600 hover:bg-hajar-700 text-white font-bold text-xs transition flex items-center shadow-md shadow-hajar-500/20">
+                            <i class="fa-solid fa-key ml-1.5"></i> فتح الملف
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Protected VIP PDF 2 -->
+                <div class="resource-item secondary2 bg-purple-50/50 rounded-2xl p-6 border border-hajar-200 hover:shadow-lg transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-file-shield"></i>
+                        </div>
+                        <span class="text-xs font-bold text-hajar-800 bg-hajar-200 px-3 py-1 rounded-full"><i class="fa-solid fa-lock ml-1"></i> محتوى للمسجلين</span>
+                    </div>
+                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">سلسلة التحدي والتميز في الاشتقاقية (2 ثانوي)</h4>
+                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">تمارين متقدمة جداً لاختبار الجاهزية وتحصيل العلامات الكاملة.</p>
+                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
+                        <span class="text-[11px] font-semibold text-slate-400">خاص بالمسجلين</span>
+                        <button onclick="protectedAction('سلسلة التحدي والتميز (2 ثانوي)', 'تتطلب هذه السلسلة تسجيل الدخول لحفظ تقدمك وحل التمارين الحصرية.')" class="px-3.5 py-2 rounded-xl bg-hajar-600 hover:bg-hajar-700 text-white font-bold text-xs transition flex items-center shadow-md shadow-hajar-500/20">
+                            <i class="fa-solid fa-key ml-1.5"></i> فتح الملف
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="py-20 bg-gradient-to-br from-hajar-900 via-purple-950 to-slate-900 text-white relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-10">
+                <span class="text-hajar-300 font-bold text-xs tracking-wider uppercase bg-white/10 border border-white/20 px-4 py-1.5 rounded-full">تحدي النقاط التفاعلي</span>
+                <h2 class="text-3xl sm:text-4xl font-black mt-3">تحدي الرياضيات مع الأستاذة هاجر 🎯</h2>
+                <p class="text-purple-200 mt-2 text-sm sm:text-base">سجل دخولك لتتمكن من حفظ النقاط والنتائج مباشرة في ملفك الشخصي!</p>
+            </div>
+
+            <!-- Quiz Card Widget -->
+            <div class="glass-dark rounded-3xl p-6 sm:p-10 shadow-2xl border border-white/10">
+                <div id="quiz-container">
+                    <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                        <span class="text-xs sm:text-sm text-hajar-300 font-bold" id="quiz-progress">السؤال 1 من 3</span>
+                        <span class="text-xs bg-hajar-500/30 text-fuchsia-200 border border-hajar-400/30 px-3 py-1 rounded-full font-mono" id="quiz-score">النقاط المخزنة: 0</span>
+                    </div>
+
+                    <div id="quiz-content">
+                        <h3 class="text-lg sm:text-xl font-bold mb-6 text-slate-100" id="quiz-question">ما هي القيمة الممكنة لـ ln(e^3)؟</h3>
+
+                        <div class="space-y-3" id="quiz-options">
+                            <button onclick="checkAnswer(0)" class="option-btn w-full text-right p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-medium transition flex items-center justify-between text-sm sm:text-base">
+                                <span>A) 3</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer(1)" class="option-btn w-full text-right p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-medium transition flex items-center justify-between text-sm sm:text-base">
+                                <span>B) e</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer(2)" class="option-btn w-full text-right p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-medium transition flex items-center justify-between text-sm sm:text-base">
+                                <span>C) 1</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="quiz-feedback" class="hidden mt-6 p-4 rounded-xl text-center font-bold text-sm"></div>
+
+                    <div class="mt-8 flex justify-end">
+                        <button id="next-btn" onclick="nextQuestion()" class="hidden px-6 py-3 rounded-xl bg-hajar-600 hover:bg-hajar-500 text-white font-bold transition text-sm">السؤال التالي <i class="fa-solid fa-arrow-left mr-2"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section id="contact" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                
+                <div>
+                    <span class="text-hajar-300 font-bold text-xs tracking-wider uppercase bg-white/10 border border-white/10 px-4 py-1.5 rounded-full">التواصل المباشر</span>
+                    <h2 class="text-3xl sm:text-4xl font-black mt-4 leading-tight">تواصل مع الأستاذة هاجر بوشن</h2>
+                    <p class="text-slate-400 mt-4 leading-relaxed text-sm sm:text-base">
+                        يمكنك متابعة منصاتنا الرسمية للحصول على أحدث الدروس، البث المباشر، والإرشادات للتفوق في مادة الرياضيات.
+                    </p>
+
+                    <!-- Social Icons Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
+                        <a href="https://youtube.com" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/5 hover:bg-red-600 transition group border border-white/10">
+                            <i class="fa-brands fa-youtube text-2xl text-red-500 group-hover:text-white transition"></i>
+                            <span class="text-xs font-bold mt-2">يوتيوب</span>
+                        </a>
+                        <a href="https://t.me" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/5 hover:bg-sky-500 transition group border border-white/10">
+                            <i class="fa-brands fa-telegram text-2xl text-sky-400 group-hover:text-white transition"></i>
+                            <span class="text-xs font-bold mt-2">تلغرام</span>
+                        </a>
+                        <a href="https://facebook.com" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/5 hover:bg-blue-600 transition group border border-white/10">
+                            <i class="fa-brands fa-facebook text-2xl text-blue-500 group-hover:text-white transition"></i>
+                            <span class="text-xs font-bold mt-2">فيسبوك</span>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/5 hover:bg-pink-600 transition group border border-white/10">
+                            <i class="fa-brands fa-instagram text-2xl text-pink-500 group-hover:text-white transition"></i>
+                            <span class="text-xs font-bold mt-2">إنستغرام</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md">
+                    <h3 class="text-xl font-bold mb-6">أرسل استفسارك المباشر</h3>
+                    <form onsubmit="handleFormSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">الاسم واللقب</label>
+                            <input type="text" id="contact-name" required placeholder="أدخل اسمك الكامل" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-hajar-500 transition text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">رسالتك أو سؤالك</label>
+                            <textarea rows="4" required placeholder="اكتب سؤالك هنا..." class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-hajar-500 transition text-sm"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-hajar-600 to-purple-600 hover:from-hajar-500 font-bold text-white transition text-sm">
+                            إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-500 py-8 border-t border-white/10 text-xs text-center">
+        © 2026 المنصة التعليمية للأستاذة هاجر بوشن. جميع الحقوق محفوظة.
+    </footer>
+
+    <!-- AUTHENTICATION MODAL (Glassmorphism Modal) -->
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-purple-100">
+            <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">✕</button>
+
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 rounded-2xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-2xl font-bold mx-auto mb-3">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h3 id="auth-modal-title" class="text-2xl font-black text-slate-900">تسجيل دخول التلميذ</h3>
+                <p id="auth-modal-subtitle" class="text-slate-500 text-xs mt-1">انضم إلى منصة الأستاذة هاجر بوشن للرياضيات</p>
+            </div>
+
+            <!-- Google Sign-In Option -->
+            <button onclick="handleGoogleSignIn()" class="w-full py-3 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-bold text-slate-700 text-sm transition flex items-center justify-center space-x-3 space-x-reverse mb-4 shadow-sm">
+                <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                <span>متابعة باستخدام حساب Google</span>
+            </button>
+
+            <div class="relative flex py-2 items-center mb-4">
+                <div class="flex-grow border-t border-slate-200"></div>
+                <span class="flex-shrink mx-4 text-slate-400 text-xs">أو بالبريد الإلكتروني</span>
+                <div class="flex-grow border-t border-slate-200"></div>
+            </div>
+
+            <!-- Email & Password Form -->
+            <form onsubmit="handleEmailAuth(event)" class="space-y-3">
+                <div id="name-field-container" class="hidden">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">الاسم واللقب</label>
+                    <input type="text" id="auth-name" placeholder="مثال: محمد الأمين" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-hajar-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
+                    <input type="email" id="auth-email" required placeholder="example@gmail.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-hajar-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">كلمة المرور</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-hajar-500">
+                </div>
+
+                <button type="submit" id="auth-submit-btn" class="w-full py-3 bg-gradient-to-r from-hajar-600 to-purple-600 text-white rounded-xl font-bold text-sm shadow-md hover:from-hajar-700 transition">
+                    تسجيل الدخول
+                </button>
+            </form>
+
+            <div class="mt-4 text-center text-xs text-slate-600">
+                <span id="auth-toggle-text">ليس لديك حساب؟</span>
+                <button onclick="toggleAuthMode()" id="auth-toggle-btn" class="font-bold text-hajar-700 hover:underline ml-1">إنشاء حساب جديد</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE / DASHBOARD MODAL -->
+    <div id="profile-modal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-purple-100">
+            <button onclick="closeProfileModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">✕</button>
+
+            <div class="text-center mb-6">
+                <img id="profile-modal-avatar" src="" alt="Avatar" class="w-20 h-20 rounded-2xl mx-auto mb-3 object-cover border-2 border-hajar-500 shadow-md">
+                <h3 id="profile-modal-name" class="text-xl font-black text-slate-900"></h3>
+                <p id="profile-modal-email" class="text-xs text-slate-500"></p>
+            </div>
+
+            <div class="bg-hajar-50 rounded-2xl p-4 border border-hajar-100 mb-6 grid grid-cols-2 gap-4 text-center">
+                <div>
+                    <span class="block text-2xl font-black text-hajar-700" id="profile-modal-score">0</span>
+                    <span class="text-xs text-slate-500 font-semibold">مجموع النقاط</span>
+                </div>
+                <div>
+                    <span class="block text-2xl font-black text-fuchsia-600" id="profile-modal-status">نشط 🟢</span>
+                    <span class="text-xs text-slate-500 font-semibold">حالة الحساب</span>
+                </div>
+            </div>
+
+            <button onclick="handleLogout()" class="w-full py-3 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl font-bold text-sm transition">
+                تسجيل الخروج من الحساب
+            </button>
+        </div>
+    </div>
+
+    <!-- PDF Modal -->
+    <div id="pdf-modal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+            <button onclick="closePdfModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold">✕</button>
+            <div class="w-14 h-14 rounded-2xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-2xl font-bold mb-4"><i class="fa-solid fa-file-arrow-down"></i></div>
+            <h3 id="modal-title" class="text-xl font-bold text-slate-900 mb-2">عنوان الملف</h3>
+            <p id="modal-desc" class="text-slate-600 text-sm mb-6">تفاصيل الملف المختار...</p>
+            <div class="flex space-x-3 space-x-reverse">
+                <button onclick="closePdfModal(); showToast('جاري التحميل...')" class="flex-1 py-3 bg-hajar-600 text-white rounded-xl font-bold text-sm text-center">تحميل الملف (PDF)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-white/10 flex items-center space-x-3 space-x-reverse text-sm font-bold">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toast-msg">تمت العملية بنجاح</span>
+    </div>
+
+    <!-- FIREBASE MODULE & LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Environment variables fallback
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'prof-hajar-math-app';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "AIzaSyDemoConfigForHajarMathPageOnly",
+            authDomain: "prof-hajar-math.firebaseapp.com",
+            projectId: "prof-hajar-math",
+            storageBucket: "prof-hajar-math.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let userScore = 0;
+        let isSignupMode = false;
+
+        // Auth State Observer
+        window.onload = async () => {
+            // Check for redirect result from Google Login
+            try {
+                const result = await getRedirectResult(auth);
+                if (result && result.user) {
+                    showToast("تم تسجيل الدخول بـ Google بنجاح 🎉");
+                }
+            } catch (err) {
+                console.log("Redirect error handled:", err);
+            }
+
+            // Attempt Custom token or Anonymous login initially if available
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                try { await signInWithCustomToken(auth, __initial_auth_token); } catch(e) {}
+            }
+
+            onAuthStateChanged(auth, async (user) => {
+                currentUser = user;
+                if (user && !user.isAnonymous) {
+                    document.getElementById('auth-logged-out').classList.add('hidden');
+                    document.getElementById('auth-logged-in').classList.remove('hidden');
+                    document.getElementById('auth-logged-in').classList.add('flex');
+
+                    // حماية وتأمين قراءة البريد والاسم
+                    const email = user.email || '';
+                    const name = user.displayName || (email ? email.split('@')[0] : 'تلميذ');
+                    const photo = user.photoURL || `https://placehold.co/100x100/701a75/ffffff?text=${name.charAt(0).toUpperCase()}`;
+
+                    document.getElementById('user-display-name').innerText = name;
+                    document.getElementById('user-avatar').src = photo;
+
+                    // Fetch user score from Firestore
+                    await loadUserData(user.uid);
+                } else {
+                    document.getElementById('auth-logged-in').classList.add('hidden');
+                    document.getElementById('auth-logged-out').classList.remove('hidden');
+                }
+            });
+        };
+
+        async function loadUserData(uid) {
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', uid);
+                const docSnap = await getDoc(userDocRef);
+                if (docSnap.exists()) {
+                    userScore = docSnap.data().score || 0;
+                } else {
+                    userScore = 0;
+                    await setDoc(userDocRef, { score: 0, email: currentUser ? currentUser.email : '', createdAt: new Date() });
+                }
+                document.getElementById('user-score-badge').innerText = `🏆 ${userScore} نقطة`;
+                document.getElementById('quiz-score').innerText = `النقاط المخزنة: ${userScore}`;
+            } catch(e) {
+                console.log("Firestore loaded locally");
+            }
+        }
+
+        // Expose functions to window
+        window.handleGoogleSignIn = async () => {
+            const provider = new GoogleAuthProvider();
+            provider.setCustomParameters({ prompt: 'select_account' });
+            
+            try {
+                // المحاولة الأولى: عبر Popup
+                await signInWithPopup(auth, provider);
+                closeAuthModal();
+                showToast("تم تسجيل الدخول بـ Google بنجاح 🎉");
+            } catch(e) {
+                console.warn("Popup blocked or failed, attempting redirect method:", e);
+                try {
+                    // المحاولة الثانية: التوجيه المباشر في حال حظر Popup
+                    await signInWithRedirect(auth, provider);
+                } catch(errRedirect) {
+                    showToast("يرجى التأكد من إضافة رابط موقعك في Firebase Console تحت قائمة Authorized Domains.");
+                }
+            }
+        };
+
+        window.handleEmailAuth = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const name = document.getElementById('auth-name').value;
+
+            try {
+                if (isSignupMode) {
+                    const res = await createUserWithEmailAndPassword(auth, email, password);
+                    if (name) {
+                        await updateProfile(res.user, { displayName: name });
+                    }
+                    showToast("تم إنشاء حسابك بنجاح! مرحباً بك 🌟");
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    showToast("أهلاً بعودتك! تم تسجيل الدخول 🚀");
+                }
+                closeAuthModal();
+            } catch(err) {
+                showToast("خطأ في البيانات أو كلمة المرور!");
+            }
+        };
+
+        window.handleLogout = async () => {
+            await signOut(auth);
+            closeProfileModal();
+            showToast("تم تسجيل الخروج بنجاح");
+        };
+
+        window.saveQuizScore = async (addedPoints) => {
+            userScore += addedPoints;
+            document.getElementById('quiz-score').innerText = `النقاط المخزنة: ${userScore}`;
+            document.getElementById('user-score-badge').innerText = `🏆 ${userScore} نقطة`;
+
+            if (currentUser && !currentUser.isAnonymous) {
+                try {
+                    const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid);
+                    await updateDoc(userDocRef, { score: userScore });
+                } catch(e){}
+            }
+        };
+    </script>
+
+    <!-- UI Helper Scripts -->
+    <script>
+        let isSignupMode = false;
+
+        function openAuthModal(mode) {
+            isSignupMode = mode === 'signup';
+            updateModalUI();
+            document.getElementById('auth-modal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function toggleAuthMode() {
+            isSignupMode = !isSignupMode;
+            updateModalUI();
+        }
+
+        function updateModalUI() {
+            const title = document.getElementById('auth-modal-title');
+            const submitBtn = document.getElementById('auth-submit-btn');
+            const nameContainer = document.getElementById('name-field-container');
+            const toggleText = document.getElementById('auth-toggle-text');
+            const toggleBtn = document.getElementById('auth-toggle-btn');
+
+            if (isSignupMode) {
+                title.innerText = "إنشاء حساب تلميذ جديد";
+                submitBtn.innerText = "إنشاء الحساب";
+                nameContainer.classList.remove('hidden');
+                toggleText.innerText = "لديك حساب بالفعل؟";
+                toggleBtn.innerText = "تسجيل الدخول";
+            } else {
+                title.innerText = "تسجيل دخول التلميذ";
+                submitBtn.innerText = "تسجيل الدخول";
+                nameContainer.classList.add('hidden');
+                toggleText.innerText = "ليس لديك حساب؟";
+                toggleBtn.innerText = "إنشاء حساب جديد";
+            }
+        }
+
+        function protectedAction(title, desc) {
+            // Check if user logged in
+            const loggedInContainer = document.getElementById('auth-logged-in');
+            if (loggedInContainer.classList.contains('hidden')) {
+                showToast("🔒 هذا المحتوى خاص بالمسجلين! يرجى تسجيل الدخول أولاً.");
+                openAuthModal('login');
+            } else {
+                openPdfModal(title, desc);
+            }
+        }
+
+        function openProfileModal() {
+            const name = document.getElementById('user-display-name').innerText;
+            const avatar = document.getElementById('user-avatar').src;
+
+            document.getElementById('profile-modal-name').innerText = name;
+            document.getElementById('profile-modal-avatar').src = avatar;
+            document.getElementById('profile-modal').classList.remove('hidden');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-modal').classList.add('hidden');
+        }
+
+        function openPdfModal(title, desc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('pdf-modal').classList.remove('hidden');
+        }
+
+        function closePdfModal() {
+            document.getElementById('pdf-modal').classList.add('hidden');
+        }
+
+        function filterResources(category) {
+            const items = document.querySelectorAll('.resource-item');
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3500);
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            showToast("تم إرسال رسالتك بنجاح للأستاذة هاجر بوشن!");
+            e.target.reset();
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Quiz Interactive Handler
+        const quizData = [
+            { question: "ما هي القيمة الممكنة لـ ln(e^3)؟", options: ["3", "e", "1"], correct: 0 },
+            { question: "مشتقة الدالة f(x) = x² + 3x هي:", options: ["2x + 3", "x + 3", "2x"], correct: 0 },
+            { question: "مجموع زوايا المثلث في الهندسة المستوية يساوي:", options: ["90°", "180°", "360°"], correct: 1 }
+        ];
+
+        let currentQ = 0;
+
+        function checkAnswer(index) {
+            const feedback = document.getElementById('quiz-feedback');
+            const nextBtn = document.getElementById('next-btn');
+            document.querySelectorAll('.option-btn').forEach(opt => opt.disabled = true);
+
+            if (index === quizData[currentQ].correct) {
+                feedback.innerText = "إجابة صحيحة! أحسنت 🌟 تم إضافة 10 نقاط لحسابك.";
+                feedback.className = "mt-6 p-4 rounded-xl text-center font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+                window.saveQuizScore(10);
+            } else {
+                feedback.innerText = "إجابة خاطئة! الإجابة الصحيحة هي: " + quizData[currentQ].options[quizData[currentQ].correct];
+                feedback.className = "mt-6 p-4 rounded-xl text-center font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30";
+            }
+
+            feedback.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < quizData.length) {
+                document.getElementById('quiz-progress').innerText = `السؤال ${currentQ + 1} من ${quizData.length}`;
+                document.getElementById('quiz-question').innerText = quizData[currentQ].question;
+                
+                const optionsContainer = document.getElementById('quiz-options');
+                optionsContainer.innerHTML = '';
+
+                quizData[currentQ].options.forEach((opt, idx) => {
+                    optionsContainer.innerHTML += `
+                        <button onclick="checkAnswer(${idx})" class="option-btn w-full text-right p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-medium transition flex items-center justify-between text-sm sm:text-base">
+                            <span>${opt}</span>
+                            <i class="fa-regular fa-circle text-slate-400"></i>
+                        </button>
+                    `;
+                });
+
+                document.getElementById('quiz-feedback').classList.add('hidden');
+                document.getElementById('next-btn').classList.add('hidden');
+            } else {
+                document.getElementById('quiz-content').innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="text-5xl mb-4">👑</div>
+                        <h4 class="text-2xl font-bold mb-2">ممتاز! أنهيت الاختبار التفاعلي</h4>
+                        <p class="text-purple-200 text-lg">تم تحديث وحفظ جميع النقاط في حسابك بنجاح!</p>
+                    </div>
+                `;
+                document.getElementById('next-btn').classList.add('hidden');
+                document.getElementById('quiz-feedback').classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
