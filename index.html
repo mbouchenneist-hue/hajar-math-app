@@ -3,343 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأستاذة هاجر بوشن - مادة الرياضيات | Prof Hajar Bochenne</title>
+    <title>منصة الرياضيات - الأستاذة هاجر بوشن</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Tajawal -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        hajar: {
-                            50: '#fdf4ff',
-                            100: '#fae8ff',
-                            200: '#f5d0fe',
-                            300: '#f0abfc',
-                            400: '#e879f9',
-                            500: '#d946ef',
-                            600: '#c026d3',
-                            700: '#a21caf',
-                            800: '#86198f',
-                            900: '#701a75',
-                            soft: '#9d4edd',
-                            accent: '#f43f5e'
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                        },
+                        secondary: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
                         }
                     },
                     fontFamily: {
-                        tajawal: ['Tajawal', 'sans-serif'],
+                        cairo: ['Cairo', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            scroll-behavior: smooth;
-        }
+        body { font-family: 'Cairo', sans-serif; }
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(245, 208, 254, 0.5);
-        }
-        .glass-dark {
-            background: rgba(112, 26, 117, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #a21caf, #d946ef, #f43f5e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-bg {
-            background: radial-gradient(circle at 10% 20%, rgba(217, 70, 239, 0.12) 0%, rgba(162, 28, 175, 0.05) 90%);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-hajar-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 glass-card border-b border-purple-100 transition-all duration-300">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+            <div class="flex justify-between h-20 items-center">
                 <!-- Logo -->
-                <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="scrollToTop()">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-hajar-700 via-hajar-600 to-fuchsia-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-fuchsia-500/20 transform hover:scale-105 transition-transform">
-                        <i class="fa-solid fa-square-root-variable text-xl"></i>
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-secondary-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-brand-500/30">
+                        <i class="fa-solid fa-square-root-variable"></i>
                     </div>
                     <div>
-                        <span class="text-lg sm:text-xl font-black text-slate-900 tracking-tight block">الأستاذة هاجر بوشن</span>
-                        <span class="text-xs font-bold text-hajar-600 tracking-wider">Prof Hajar Bochenne - مادة الرياضيات</span>
+                        <span class="text-xl font-extrabold bg-gradient-to-r from-brand-700 to-secondary-600 bg-clip-text text-transparent block">الأستاذة هاجر بوشن</span>
+                        <span class="text-xs text-slate-500 font-medium block">منصة الرياضيات التفاعلية</span>
                     </div>
                 </div>
 
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden lg:flex items-center space-x-1 space-x-reverse font-medium text-slate-700 text-sm">
-                    <a href="#home" class="px-3.5 py-2 rounded-xl text-hajar-700 bg-hajar-100 font-bold transition">الرئيسية</a>
-                    <a href="#about" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">عن الأستاذة</a>
-                    <a href="#levels" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">المراحل التعليمية</a>
-                    <a href="#resources" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">الدروس والسلاسل</a>
-                    <a href="#quiz" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">اختبار تفاعلي</a>
-                    <a href="#contact" class="px-3.5 py-2 rounded-xl hover:text-hajar-600 hover:bg-hajar-50 transition">تواصل معنا</a>
-                </nav>
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8 space-x-reverse font-semibold text-slate-600">
+                    <a href="#hero" class="hover:text-brand-600 transition-colors">الرئيسية</a>
+                    <a href="#levels" class="hover:text-brand-600 transition-colors">المستويات التعليمية</a>
+                    <a href="#features" class="hover:text-brand-600 transition-colors">مميزات المنصة</a>
+                    <a href="#quizzes" class="hover:text-brand-600 transition-colors">الاختبارات والتحديات</a>
+                </div>
 
-                <!-- Auth / User Profile Header Section -->
-                <div class="flex items-center space-x-3 space-x-reverse">
-                    <!-- Shown when LOGGED OUT -->
-                    <div id="auth-logged-out" class="flex items-center space-x-2 space-x-reverse">
-                        <button onclick="openAuthModal('login')" class="bg-gradient-to-r from-hajar-600 to-purple-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md shadow-hajar-500/20 hover:shadow-lg transition text-xs sm:text-sm flex items-center">
-                            <i class="fa-solid fa-right-to-bracket ml-2"></i>
-                            <span>دخول التلاميذ</span>
-                        </button>
-                    </div>
-
-                    <!-- Shown when LOGGED IN -->
-                    <div id="auth-logged-in" class="hidden flex items-center space-x-3 space-x-reverse">
-                        <div class="flex items-center space-x-2 space-x-reverse bg-hajar-50 p-1.5 px-3 rounded-2xl border border-hajar-200 cursor-pointer" onclick="openProfileModal()">
-                            <img id="user-avatar" src="https://placehold.co/100x100/701a75/ffffff?text=U" alt="User" class="w-8 h-8 rounded-xl object-cover border border-hajar-300">
-                            <div class="text-right hidden sm:block">
-                                <span id="user-display-name" class="block text-xs font-bold text-slate-900 leading-tight">اسم التلميذ</span>
-                                <span id="user-score-badge" class="block text-[10px] font-bold text-hajar-600">🏆 0 نقطة</span>
-                            </div>
+                <!-- User Profile / Auth Area -->
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div id="user-info" class="hidden flex items-center space-x-3 space-x-reverse bg-slate-100 p-2 rounded-xl">
+                        <img id="user-avatar" class="w-9 h-9 rounded-lg object-cover border border-white" src="" alt="User Avatar">
+                        <div class="text-right">
+                            <span id="user-name" class="block text-xs font-bold text-slate-700"></span>
+                            <span id="user-score" class="block text-[10px] text-brand-600 font-extrabold">0 نقطة</span>
                         </div>
-                        <button onclick="handleLogout()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 flex items-center justify-center transition border border-slate-200" title="تسجيل الخروج">
-                            <i class="fa-solid fa-power-off text-sm"></i>
+                        <button onclick="logout()" class="text-slate-400 hover:text-red-500 p-1 text-sm transition-colors" title="تسجيل الخروج">
+                            <i class="fa-solid fa-right-from-bracket"></i>
                         </button>
                     </div>
 
-                    <!-- Mobile menu button -->
-                    <div class="lg:hidden flex items-center">
-                        <button id="mobile-menu-btn" class="p-2.5 rounded-xl text-slate-700 hover:text-hajar-700 hover:bg-hajar-50 focus:outline-none">
-                            <i class="fa-solid fa-bars text-2xl"></i>
-                        </button>
-                    </div>
+                    <button id="auth-btn" onclick="openAuthModal('login')" class="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white font-bold py-2.5 px-6 rounded-xl shadow-md shadow-brand-500/20 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fa-solid fa-user"></i>
+                        <span>دخول التلاميذ</span>
+                    </button>
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Navigation Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-hajar-100 px-4 pt-2 pb-6 space-y-2">
-            <a href="#home" class="mobile-link block px-4 py-2.5 rounded-xl text-hajar-700 font-bold bg-hajar-50">الرئيسية</a>
-            <a href="#about" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">عن الأستاذة</a>
-            <a href="#levels" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">المراحل التعليمية</a>
-            <a href="#resources" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">الدروس والسلاسل</a>
-            <a href="#quiz" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">اختبار تفاعلي</a>
-            <a href="#contact" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">تواصل معنا</a>
-        </div>
-    </header>
+    </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative overflow-hidden pt-10 pb-16 md:py-24 hero-bg">
+    <section id="hero" class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                
-                <!-- Left Text Content -->
-                <div class="space-y-6 text-center md:text-right">
-                    <div class="inline-flex items-center space-x-2 space-x-reverse bg-hajar-100 text-hajar-800 border border-hajar-200 px-4 py-2 rounded-full text-xs sm:text-sm font-bold">
-                        <span class="flex h-2.5 w-2.5 rounded-full bg-hajar-500 animate-ping"></span>
-                        <span>مرحباً بكم في منصة الأستاذة هاجر بوشن التفاعلية</span>
-                    </div>
-
-                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
-                        طريقك نحو التميز والعلامة الكاملة في <span class="gradient-text">الرياضيات</span>
-                    </h1>
-
-                    <p class="text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-xl mx-auto md:mx-0">
-                        مع الأستاذة <strong>هاجر بوشن</strong>، نبسّط لك أعقد الأفكار الرياضية بشرح خطوة بخطوة. سجل حسابك للوصول إلى السلاسل الحصرية، وتتبع نقاطك وااختباراتك التفاعلية!
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
-                        <a href="#resources" class="inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-gradient-to-r from-hajar-600 to-purple-700 text-white font-bold text-base shadow-lg shadow-hajar-500/25 hover:shadow-hajar-500/40 hover:-translate-y-0.5 transition duration-200">
-                            <i class="fa-solid fa-book-open ml-2.5"></i>
-                            تصفح الدروس والسلاسل
-                        </a>
-                        <button onclick="openAuthModal('signup')" class="inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white border border-hajar-200 text-slate-800 font-bold text-base hover:bg-hajar-50 hover:border-hajar-300 transition duration-200 shadow-sm">
-                            <i class="fa-solid fa-user-plus text-hajar-600 ml-2.5"></i>
-                            أنشئ حسابك الآن
-                        </button>
-                    </div>
-
-                    <!-- Stats Quick View -->
-                    <div class="pt-8 grid grid-cols-3 gap-4 border-t border-purple-100 max-w-md mx-auto md:mx-0">
-                        <div class="bg-white/60 backdrop-blur-sm p-3 rounded-2xl border border-purple-50">
-                            <div class="text-2xl sm:text-3xl font-black text-hajar-700">+45,000</div>
-                            <div class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1">تلميذ مستفيد</div>
-                        </div>
-                        <div class="bg-white/60 backdrop-blur-sm p-3 rounded-2xl border border-purple-50">
-                            <div class="text-2xl sm:text-3xl font-black text-hajar-700">+180</div>
-                            <div class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1">سلسلة وملخص PDF</div>
-                        </div>
-                        <div class="bg-white/60 backdrop-blur-sm p-3 rounded-2xl border border-purple-50">
-                            <div class="text-2xl sm:text-3xl font-black text-fuchsia-600">20/20</div>
-                            <div class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1">هدفنا الدائم</div>
-                        </div>
-                    </div>
+            <div class="text-center max-w-3xl mx-auto space-y-6">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-100 text-brand-700 text-sm font-semibold animate-pulse">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span>مرحباً بكم في الموسم الدراسي الجديد</span>
                 </div>
-
-                <!-- Right Card Visual -->
-                <div class="relative flex justify-center">
-                    <div class="relative w-full max-w-md">
-                        <div class="relative bg-gradient-to-b from-white to-hajar-50/60 rounded-3xl p-6 shadow-2xl border border-hajar-100">
-                            <div class="aspect-square rounded-2xl bg-gradient-to-tr from-hajar-800 via-hajar-600 to-purple-600 relative overflow-hidden flex items-center justify-center shadow-inner">
-                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center">
-                                    <div class="w-28 h-28 rounded-full border-4 border-white/30 p-1 mb-4 shadow-lg backdrop-blur-md bg-white/10 flex items-center justify-center">
-                                        <div class="w-full h-full rounded-full bg-white text-hajar-700 flex items-center justify-center text-4xl font-extrabold shadow-md">
-                                            <i class="fa-solid fa-graduation-cap"></i>
-                                        </div>
-                                    </div>
-                                    <h3 class="text-2xl font-black">الأستاذة هاجر بوشن</h3>
-                                    <p class="text-fuchsia-100 font-medium text-sm mt-1">Professeur de Mathématiques</p>
-                                    <div class="mt-4 inline-flex items-center space-x-2 space-x-reverse bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold">
-                                        <i class="fa-solid fa-star text-amber-300"></i>
-                                        <span>منصة التعليم التفاعلية الذكية</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
+                    احترف الرياضيات ببساطة مع <span class="bg-gradient-to-r from-brand-600 to-secondary-500 bg-clip-text text-transparent">الأستاذة هاجر بوشن</span>
+                </h1>
+                <p class="text-lg text-slate-600 font-normal leading-relaxed">
+                    منصة تعليمية متكاملة تقدم ملخصات شاملة، تمارين محلولة بالتفصيل، واختبارات تفاعلية تساعدك على التحصيل المتميز وحصد أصلح العلامات.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                    <a href="#quizzes" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 px-8 rounded-2xl shadow-lg shadow-brand-500/30 transition-all flex items-center justify-center gap-3 text-lg">
+                        <i class="fa-solid fa-play"></i>
+                        <span>ابدأ التحدي الآن</span>
+                    </a>
+                    <a href="#levels" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-4 px-8 rounded-2xl transition-all flex items-center justify-center gap-3 text-lg">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>استعراض الدروس</span>
+                    </a>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Resources Section -->
-    <section id="resources" class="py-20 bg-white">
+    <!-- Levels Section -->
+    <section id="levels" class="py-16 bg-white border-y border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-                <div>
-                    <span class="text-hajar-700 font-bold text-xs tracking-wider uppercase bg-hajar-100 px-4 py-1.5 rounded-full">المكتبة التعليمية الحصرية</span>
-                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">السلاسل والملخصات (PDF)</h2>
-                    <p class="text-slate-600 mt-2 text-sm sm:text-base">سجل دخولك لتتمكن من معاينة وتحميل الحلول والسلاسل الخاصة بالأستاذة.</p>
-                </div>
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-extrabold text-slate-900">المستويات التعليمية</h2>
+                <p class="text-slate-500 mt-2">اختر مستواك الدراسي للوصول المباشر إلى الدروس والتمارين</p>
             </div>
 
-            <!-- Resource Cards Grid -->
-            <div id="resource-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Free PDF -->
-                <div class="resource-item bac bg-slate-50 rounded-2xl p-6 border border-purple-100 hover:shadow-lg transition">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl font-bold">
-                            <i class="fa-solid fa-file-pdf"></i>
-                        </div>
-                        <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock-open ml-1"></i> مجاني للجميع</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-500/30 hover:shadow-xl hover:shadow-brand-500/5 transition-all group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-600 flex items-center justify-center text-2xl font-bold mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-graduation-cap"></i>
                     </div>
-                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">سلسلة المتتاليات العددية (الجزء الأول)</h4>
-                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">سلسلة متكاملة تشمل تمارين البرهان بالتراجع والتعامل مع الحدود.</p>
-                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
-                        <button onclick="openPdfModal('سلسلة المتتاليات العددية', 'سلسلة مجانية متوفرة للجميع للتحميل والمعاينة المباشرة.')" class="px-3.5 py-2 rounded-xl bg-hajar-100 text-hajar-700 hover:bg-hajar-600 hover:text-white font-bold text-xs transition flex items-center">
-                            <i class="fa-solid fa-download ml-1.5"></i> معاينة / تحميل
-                        </button>
-                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">السنة الأولى ثانوي</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">الأعداد والحساب، الدوال العددية، الهندسة المستوية، والعبارات الجبرية.</p>
+                    <button onclick="selectLevel('1as')" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all">استكشاف المادة</button>
                 </div>
 
-                <!-- Protected VIP PDF -->
-                <div class="resource-item bac bg-purple-50/50 rounded-2xl p-6 border border-hajar-200 hover:shadow-lg transition">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-xl font-bold">
-                            <i class="fa-solid fa-file-shield"></i>
-                        </div>
-                        <span class="text-xs font-bold text-hajar-800 bg-hajar-200 px-3 py-1 rounded-full"><i class="fa-solid fa-lock ml-1"></i> محتوى للمسجلين</span>
+                <!-- Card 2 -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-500/30 hover:shadow-xl hover:shadow-brand-500/5 transition-all group">
+                    <div class="w-14 h-14 rounded-2xl bg-secondary-500/10 text-secondary-600 flex items-center justify-center text-2xl font-bold mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-chart-line"></i>
                     </div>
-                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">الحل النموذجي المميّز للدوال الأسية واللوغاريتمية</h4>
-                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">شرح وحل تفصيلي بالخطوات لسلاسل الدوال الشاملة مع سلم التنقيط.</p>
-                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
-                        <button onclick="protectedAction('الحل النموذجي للدوال الأسية', 'ملف خاص بالتلاميذ المسجلين في المنصة.')" class="px-3.5 py-2 rounded-xl bg-hajar-600 hover:bg-hajar-700 text-white font-bold text-xs transition flex items-center shadow-md">
-                            <i class="fa-solid fa-key ml-1.5"></i> فتح الملف
-                        </button>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">السنة الثانية ثانوي</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">اشتقاقية الدوال، المتتاليات العددية، الزوايا الموجهة، والاحتمالات.</p>
+                    <button onclick="selectLevel('2as')" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all">استكشاف المادة</button>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-500/30 hover:shadow-xl hover:shadow-brand-500/5 transition-all group">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl font-bold mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">السنة الثالثة ثانوي (بكالوريا)</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">الدوال الأسية واللوغاريتمية، التزايد المقارن، الهندسة الفضائية، والأعداد المركبة.</p>
+                    <button onclick="selectLevel('3as')" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all">استكشاف المادة</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Quiz Section -->
+    <section id="quizzes" class="py-16">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-gradient-to-br from-slate-900 to-brand-950 rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <span class="text-brand-400 font-extrabold text-sm uppercase tracking-wider block">تحدي اليوم</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">اختبار سريع في الرياضيات</h2>
+                        </div>
+                        <div id="quiz-score-badge" class="bg-white/10 px-4 py-2 rounded-2xl border border-white/10 backdrop-blur-md">
+                            <span class="text-xs text-slate-300 block">النقاط الحالية</span>
+                            <span id="quiz-score-val" class="text-lg font-black text-amber-400">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Content Container -->
+                    <div id="quiz-container" class="space-y-6">
+                        <div class="bg-white/5 p-6 rounded-2xl border border-white/10">
+                            <p id="quiz-question" class="text-lg font-semibold leading-relaxed">جاري تحميل السؤال...</p>
+                        </div>
+                        <div id="quiz-options" class="grid grid-cols-1 gap-3">
+                            <!-- Options rendered dynamically -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- AUTHENTICATION MODAL -->
-    <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-purple-100">
-            <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">✕</button>
-
-            <div class="text-center mb-6">
-                <div class="w-14 h-14 rounded-2xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-2xl font-bold mx-auto mb-3">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <h3 id="auth-modal-title" class="text-2xl font-black text-slate-900">تسجيل دخول التلميذ</h3>
-                <p id="auth-modal-subtitle" class="text-slate-500 text-xs mt-1">انضم إلى منصة الأستاذة هاجر بوشن للرياضيات</p>
-            </div>
-
-            <!-- Google Sign-In Option -->
-            <button onclick="handleGoogleSignIn()" class="w-full py-3 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-bold text-slate-700 text-sm transition flex items-center justify-center space-x-3 space-x-reverse mb-4 shadow-sm">
-                <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-                <span>متابعة باستخدام حساب Google</span>
-            </button>
-
-            <div class="relative flex py-2 items-center mb-4">
-                <div class="flex-grow border-t border-slate-200"></div>
-                <span class="flex-shrink mx-4 text-slate-400 text-xs">أو بالبريد الإلكتروني</span>
-                <div class="flex-grow border-t border-slate-200"></div>
-            </div>
-
-            <!-- Email & Password Form -->
-            <form onsubmit="handleEmailAuth(event)" class="space-y-3">
-                <div id="name-field-container" class="hidden">
-                    <label class="block text-xs font-bold text-slate-700 mb-1">الاسم واللقب</label>
-                    <input type="text" id="auth-name" placeholder="مثال: محمد الأمين" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-hajar-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
-                    <input type="email" id="auth-email" required placeholder="example@gmail.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-hajar-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">كلمة المرور</label>
-                    <input type="password" id="auth-password" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-hajar-500">
-                </div>
-
-                <button type="submit" id="auth-submit-btn" class="w-full py-3 bg-gradient-to-r from-hajar-600 to-purple-600 text-white rounded-xl font-bold text-sm shadow-md hover:from-hajar-700 transition">
-                    تسجيل الدخول
-                </button>
-            </form>
-
-            <div class="mt-4 text-center text-xs text-slate-600">
-                <span id="auth-toggle-text">ليس لديك حساب؟</span>
-                <button onclick="toggleAuthMode()" id="auth-toggle-btn" class="font-bold text-hajar-700 hover:underline ml-1">إنشاء حساب جديد</button>
-            </div>
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 جميع الحقوق محفوظة للأستاذة هاجر بوشن - مادة الرياضيات</p>
         </div>
-    </div>
+    </footer>
 
-    <!-- PROFILE / DASHBOARD MODAL -->
-    <div id="profile-modal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-purple-100">
-            <button onclick="closeProfileModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">✕</button>
-
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative">
+            <button onclick="closeAuthModal()" class="absolute top-6 left-6 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
             <div class="text-center mb-6">
-                <img id="profile-modal-avatar" src="" alt="Avatar" class="w-20 h-20 rounded-2xl mx-auto mb-3 object-cover border-2 border-hajar-500 shadow-md">
-                <h3 id="profile-modal-name" class="text-xl font-black text-slate-900"></h3>
-                <p id="profile-modal-email" class="text-xs text-slate-500"></p>
+                <h3 class="text-2xl font-bold text-slate-900">تسجيل الدخول</h3>
+                <p class="text-slate-500 text-sm mt-1">احفظ تقدمك ونقاطك في الاختبارات</p>
             </div>
 
-            <button onclick="handleLogout()" class="w-full py-3 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl font-bold text-sm transition">
-                تسجيل الخروج من الحساب
-            </button>
+            <div class="space-y-4">
+                <button onclick="handleGoogleSignIn()" class="w-full py-3.5 px-4 rounded-xl border border-slate-200 font-bold text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-3 transition-colors shadow-sm">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                    <span>متابعة باستخدام حساب Google</span>
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-white/10 flex items-center space-x-3 space-x-reverse text-sm font-bold">
-        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-        <span id="toast-msg">تمت العملية بنجاح</span>
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-6 py-3.5 rounded-2xl shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3">
+        <i id="toast-icon" class="fa-solid fa-circle-info text-brand-400"></i>
+        <span id="toast-msg" class="text-sm font-semibold"></span>
     </div>
 
-    <!-- FIREBASE MODULE & LOGIC -->
+    <!-- Firebase SDK Setup -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // Your Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyD8awxpzVHjOArsWN-ospGPJ_wBoo2reiI",
             authDomain: "prof-hajar-math.firebaseapp.com",
@@ -350,77 +242,147 @@
             measurementId: "G-7VH1V1RLYC"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
         let currentUser = null;
-        let isSignUpMode = false;
+        let userPoints = 0;
 
-        // Catch Redirect Results from Google Sign In
-        getRedirectResult(auth).then((result) => {
+        // Check for Redirect Result on Page Load
+        getRedirectResult(auth).then(async (result) => {
             if (result && result.user) {
-                syncUserData(result.user);
-                showToast(`مرحباً بك ${result.user.displayName || 'عزيزي التلميذ'}`);
+                await syncUserData(result.user);
+                showToast(`تم تسجيل الدخول بنجاح! مرحباً ${result.user.displayName || ''}`);
             }
         }).catch((err) => {
-            console.error("Redirect login error", err);
+            console.error("Redirect sign-in error:", err);
         });
 
-        // Watch Auth State
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                currentUser = user;
-                updateUIForLoggedInUser(user);
-            } else {
-                currentUser = null;
-                updateUIForLoggedOutUser();
-            }
-        });
-
-        async function syncUserData(user) {
-            try {
-                const userRef = doc(db, 'users', user.uid);
-                const userSnap = await getDoc(userRef);
-                if (!userSnap.exists()) {
-                    await setDoc(userRef, {
-                        uid: user.uid,
-                        displayName: user.displayName || 'تلميذ جديد',
-                        email: user.email || '',
-                        createdAt: new Date().toISOString()
-                    });
-                }
-            } catch (e) {
-                console.log("Firestore Sync:", e);
-            }
-        }
-
-        function updateUIForLoggedInUser(user) {
-            document.getElementById('auth-logged-out').classList.add('hidden');
-            document.getElementById('auth-logged-in').classList.remove('hidden');
-            document.getElementById('user-display-name').textContent = user.displayName || 'تلميذ الأستاذة هاجر';
-            document.getElementById('user-avatar').src = user.photoURL || 'https://placehold.co/100x100/701a75/ffffff?text=U';
-        }
-
-        function updateUIForLoggedOutUser() {
-            document.getElementById('auth-logged-out').classList.remove('hidden');
-            document.getElementById('auth-logged-in').classList.add('hidden');
-        }
-
+        // Google Sign In Handler
         window.handleGoogleSignIn = async () => {
             try {
-                // Use redirect mode to avoid unauthorized-domain popup blocks
-                await signInWithRedirect(auth, googleProvider);
+                const result = await signInWithPopup(auth, googleProvider);
+                if (result && result.user) {
+                    await syncUserData(result.user);
+                    closeAuthModal();
+                    showToast(`تم تسجيل الدخول بنجاح! مرحباً ${result.user.displayName || ''}`);
+                }
             } catch (error) {
-                console.error("Google Sign-In Error:", error);
-                if (error.code === 'auth/unauthorized-domain') {
-                    showToast('خطأ: النطاق غير مصرح به بعد في Firebase Console. يرجى إضافة رابط الموقع.');
-                } else {
-                    showToast('تعذر تسجيل الدخول بـ Google، حاول مجدداً أو استخدم البريد.');
+                console.warn("Popup blocked or failed, using redirect fallback:", error);
+                try {
+                    await signInWithRedirect(auth, googleProvider);
+                } catch (redirectErr) {
+                    console.error("Google Sign-In Error:", redirectErr);
+                    showToast('حدث خطأ أثناء الاتصال بـ Google. يرجى إعادة المحاولة.');
                 }
             }
         };
 
-        window.handleEmailAuth = async (e) => {
-<!-- ... existing code -->
+        // Auth State Listener
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('auth-btn').classList.add('hidden');
+                document.getElementById('user-info').classList.remove('hidden');
+                document.getElementById('user-info').classList.add('flex');
+                document.getElementById('user-name').textContent = user.displayName || 'تلميذ(ة)';
+                document.getElementById('user-avatar').src = user.photoURL || 'https://placehold.co/100x100/0284c7/ffffff?text=تلميذ';
+
+                // Fetch User Score
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    userPoints = userDoc.data().points || 0;
+                    updateScoreUI();
+                } else {
+                    await syncUserData(user);
+                }
+            } else {
+                currentUser = null;
+                document.getElementById('auth-btn').classList.remove('hidden');
+                document.getElementById('user-info').classList.add('hidden');
+            }
+        });
+
+        // Sync User Data to Firestore
+        async function syncUserData(user) {
+            try {
+                const userRef = doc(db, "users", user.uid);
+                await setDoc(userRef, {
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL,
+                    lastLogin: new Date().toISOString()
+                }, { merge: true });
+            } catch (e) {
+                console.error("Error saving user profile:", e);
+            }
+        }
+
+        // Global Logout Function
+        window.logout = () => {
+            signOut(auth).then(() => {
+                showToast("تم تسجيل الخروج بنجاح.");
+            });
+        };
+
+        // UI Helpers
+        window.openAuthModal = () => document.getElementById('auth-modal').classList.remove('hidden');
+        window.closeAuthModal = () => document.getElementById('auth-modal').classList.add('hidden');
+
+        window.showToast = (msg) => {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        };
+
+        function updateScoreUI() {
+            document.getElementById('user-score').textContent = `${userPoints} نقطة`;
+            document.getElementById('quiz-score-val').textContent = userPoints;
+        }
+
+        // Quiz Logic
+        const sampleQuiz = {
+            question: "ما هو مشتق الدالة f(x) = x² + 3x - 5 بالنسبة لـ x؟",
+            options: [
+                { text: "f'(x) = 2x + 3", correct: true },
+                { text: "f'(x) = x + 3", correct: false },
+                { text: "f'(x) = 2x - 5", correct: false },
+                { text: "f'(x) = 3x²", correct: false }
+            ]
+        };
+
+        function renderQuiz() {
+            document.getElementById('quiz-question').textContent = sampleQuiz.question;
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            sampleQuiz.options.forEach((opt) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-right p-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 font-medium transition-all";
+                btn.textContent = opt.text;
+                btn.onclick = () => {
+                    if (opt.correct) {
+                        userPoints += 10;
+                        updateScoreUI();
+                        showToast("إجابة صحيحة! +10 نقاط 🎉");
+                        if (currentUser) {
+                            setDoc(doc(db, "users", currentUser.uid), { points: userPoints }, { merge: true });
+                        }
+                    } else {
+                        showToast("إجابة خاطئة! حاول مجدداً.");
+                    }
+                };
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>
