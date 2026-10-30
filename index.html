@@ -43,7 +43,7 @@
             scroll-behavior: smooth;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(245, 208, 254, 0.5);
         }
@@ -91,6 +91,12 @@
 
                 <!-- Auth / User Profile Header Section -->
                 <div class="flex items-center space-x-3 space-x-reverse">
+                    <!-- Admin Manage Button -->
+                    <button onclick="openAdminModal()" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow-md transition flex items-center space-x-1.5 space-x-reverse" title="إدارة الدروس والسلاسل">
+                        <i class="fa-solid fa-folder-plus text-sm"></i>
+                        <span class="hidden sm:inline">إدارة المحتوى</span>
+                    </button>
+
                     <!-- Shown when LOGGED OUT -->
                     <div id="auth-logged-out" class="flex items-center space-x-2 space-x-reverse">
                         <button onclick="openAuthModal('login')" class="bg-gradient-to-r from-hajar-600 to-purple-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md shadow-hajar-500/20 hover:shadow-lg transition text-xs sm:text-sm flex items-center">
@@ -108,14 +114,14 @@
                                 <span id="user-score-badge" class="block text-[10px] font-bold text-hajar-600">🏆 0 نقطة</span>
                             </div>
                         </div>
-                        <button onclick="handleLogout()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 flex items-center justify-center transition border border-slate-200" title="تسجيل الخروج">
-                            <i class="fa-solid fa-power-off text-sm"></i>
+                        <button onclick="handleLogout()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 flex items-center justify-center transition border border-slate-200" title="تبديل أو خروج">
+                            <i class="fa-solid fa-user-gear text-sm"></i>
                         </button>
                     </div>
 
                     <!-- Mobile menu button -->
                     <div class="lg:hidden flex items-center">
-                        <button id="mobile-menu-btn" class="p-2.5 rounded-xl text-slate-700 hover:text-hajar-700 hover:bg-hajar-50 focus:outline-none">
+                        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2.5 rounded-xl text-slate-700 hover:text-hajar-700 hover:bg-hajar-50 focus:outline-none">
                             <i class="fa-solid fa-bars text-2xl"></i>
                         </button>
                     </div>
@@ -131,10 +137,10 @@
             <a href="#resources" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">الدروس والسلاسل</a>
             <a href="#quiz" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">اختبار تفاعلي</a>
             <a href="#contact" class="mobile-link block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-hajar-50 font-medium">تواصل معنا</a>
-            <a href="https://youtube.com" target="_blank" class="flex items-center justify-center space-x-2 space-x-reverse bg-red-600 text-white py-3 rounded-xl font-bold mt-4">
-                <i class="fa-brands fa-youtube"></i>
-                <span>قناة اليوتيوب</span>
-            </a>
+            <button onclick="openAdminModal()" class="w-full flex items-center justify-center space-x-2 space-x-reverse bg-amber-500 text-white py-3 rounded-xl font-bold mt-2">
+                <i class="fa-solid fa-folder-plus"></i>
+                <span>إدارة المحتوى والدروس</span>
+            </button>
         </div>
     </header>
 
@@ -155,7 +161,7 @@
                     </h1>
 
                     <p class="text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-xl mx-auto md:mx-0">
-                        مع الأستاذة <strong>هاجر بوشن</strong>، نبسّط لك أعقد الأفكار الرياضية بشرح خطوة بخطوة. سجل حسابك للوصول إلى السلاسل الحصرية، وتتبع نقاطك وااختباراتك التفاعلية!
+                        مع الأستاذة **هاجر بوشن**، نبسّط لك أعقد الأفكار الرياضية بشرح خطوة بخطوة. سجل حسابك للوصول إلى السلاسل الحصرية، وتتبع نقاطك واختباراتك التفاعلية!
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
@@ -221,7 +227,7 @@
         </div>
     </section>
 
-    <!-- About Prof Section -->
+    <!-- About Section -->
     <section id="about" class="py-16 bg-white border-y border-purple-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-gradient-to-r from-hajar-50 via-purple-50 to-fuchsia-50 rounded-3xl p-8 sm:p-12 border border-hajar-100/80 shadow-sm relative overflow-hidden">
@@ -235,7 +241,7 @@
                         <span class="text-hajar-700 font-bold text-xs tracking-wider uppercase bg-white border border-hajar-200 px-3.5 py-1.5 rounded-full">نبذة عن المنصة</span>
                         <h2 class="text-2xl sm:text-3xl font-black text-slate-900">تعليم تفاعلي مخصص لكل تلميذ</h2>
                         <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
-                            تسعى الأستاذة <strong>هاجر بوشن</strong> لتوفير تجربة تعليمية فريدة تُمكّن التلاميذ من بناء أساس رياضيات قوي، تتبع نتيجتهم في الاختبارات التفاعلية، وحفظ الملفات الدراسية مباشرة في حساباتهم الشغوفة للنجاح.
+                            تسعى الأستاذة **هاجر بوشن** لتوفير تجربة تعليمية فريدة تُمكّن التلاميذ من بناء أساس رياضيات قوي، تتبع نتيجتهم في الاختبارات التفاعلية، وحفظ الملفات الدراسية مباشرة في حساباتهم الشغوفة للنجاح.
                         </p>
                         <div class="flex flex-wrap gap-3 pt-2 justify-center md:justify-start text-xs font-bold">
                             <span class="bg-white text-hajar-800 px-3 py-1.5 rounded-xl border border-hajar-200 shadow-sm"><i class="fa-solid fa-circle-check text-hajar-500 ml-1"></i> تسجيل دخول سريع وآمن</span>
@@ -248,7 +254,7 @@
         </div>
     </section>
 
-    <!-- Academic Levels Section -->
+    <!-- Levels Section -->
     <section id="levels" class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
@@ -327,64 +333,83 @@
 
             <!-- Resource Cards Grid -->
             <div id="resource-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- Free PDF -->
-                <div class="resource-item bac bg-slate-50 rounded-2xl p-6 border border-purple-100 hover:shadow-lg transition">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl font-bold">
-                            <i class="fa-solid fa-file-pdf"></i>
-                        </div>
-                        <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock-open ml-1"></i> مجاني للجميع</span>
-                    </div>
-                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">سلسلة المتتاليات العددية (الجزء الأول)</h4>
-                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">سلسلة متكاملة تشمل تمارين البرهان بالتراجع والتعامل مع الحدود.</p>
-                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
-                        <span class="text-[11px] font-semibold text-slate-400">الحجم: 2.7 ميغابايت</span>
-                        <button onclick="openPdfModal('سلسلة المتتاليات العددية', 'سلسلة مجانية متوفرة للجميع للتحميل والمعاينة المباشرة.')" class="px-3.5 py-2 rounded-xl bg-hajar-100 text-hajar-700 hover:bg-hajar-600 hover:text-white font-bold text-xs transition flex items-center">
-                            <i class="fa-solid fa-download ml-1.5"></i> معاينة / تحميل
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Protected VIP PDF 1 -->
-                <div class="resource-item bac bg-purple-50/50 rounded-2xl p-6 border border-hajar-200 hover:shadow-lg transition relative overflow-hidden">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-xl font-bold">
-                            <i class="fa-solid fa-file-shield"></i>
-                        </div>
-                        <span class="text-xs font-bold text-hajar-800 bg-hajar-200 px-3 py-1 rounded-full"><i class="fa-solid fa-lock ml-1"></i> محتوى للمسجلين</span>
-                    </div>
-                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">الحل النموذجي المميّز للدوال الأسية واللوغاريتمية</h4>
-                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">شرح وحل تفصيلي بالخطوات لسلاسل الدوال الشاملة مع سلم التنقيط.</p>
-                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
-                        <span class="text-[11px] font-semibold text-slate-400">خاص بالمسجلين</span>
-                        <button onclick="protectedAction('الحل النموذجي للدوال الأسية', 'ملف حائل يشتمل على الحل المنهجي لكافة تمارين الدوال الأسية واللوغاريتمية.')" class="px-3.5 py-2 rounded-xl bg-hajar-600 hover:bg-hajar-700 text-white font-bold text-xs transition flex items-center shadow-md shadow-hajar-500/20">
-                            <i class="fa-solid fa-key ml-1.5"></i> فتح الملف
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Protected VIP PDF 2 -->
-                <div class="resource-item secondary2 bg-purple-50/50 rounded-2xl p-6 border border-hajar-200 hover:shadow-lg transition">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-xl font-bold">
-                            <i class="fa-solid fa-file-shield"></i>
-                        </div>
-                        <span class="text-xs font-bold text-hajar-800 bg-hajar-200 px-3 py-1 rounded-full"><i class="fa-solid fa-lock ml-1"></i> محتوى للمسجلين</span>
-                    </div>
-                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">سلسلة التحدي والتميز في الاشتقاقية (2 ثانوي)</h4>
-                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">تمارين متتقدمة جداً لاختبار الجاهزية وتحصيل العلامات الكاملة.</p>
-                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
-                        <span class="text-[11px] font-semibold text-slate-400">خاص بالمسجلين</span>
-                        <button onclick="protectedAction('سلسلة التحدي والتميز (2 ثانوي)', 'تتطلب هذه السلسلة تسجيل الدخول لحفظ تقدمك وحل التمارين الحصرية.')" class="px-3.5 py-2 rounded-xl bg-hajar-600 hover:bg-hajar-700 text-white font-bold text-xs transition flex items-center shadow-md shadow-hajar-500/20">
-                            <i class="fa-solid fa-key ml-1.5"></i> فتح الملف
-                        </button>
-                    </div>
-                </div>
-
+                <!-- Dynamically Rendered Lessons/PDFs -->
             </div>
         </div>
     </section>
+
+    <!-- ADMIN CONTENT MANAGER MODAL -->
+    <div id="admin-modal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative border border-purple-100 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAdminModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">✕</button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-bold mx-auto mb-2">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+                <h3 class="text-xl font-black text-slate-900">إدارة مكتبة الدروس والسلاسل</h3>
+                <p class="text-slate-500 text-xs mt-1">يمكنك إضافة، تعديل أو حذف أي ملف درس بسهولة من هنا</p>
+            </div>
+
+            <!-- Add / Edit Form -->
+            <form onsubmit="handleSaveResource(event)" class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3 mb-6">
+                <input type="hidden" id="admin-resource-id" value="">
+                <h4 id="admin-form-title" class="text-xs font-bold text-slate-700 uppercase tracking-wider">إضافة درس / سلسلة جديدة</h4>
+                
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">عنوان الملف / الدرس</label>
+                    <input type="text" id="admin-res-title" required placeholder="مثال: سلسلة المتتاليات العددية" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-hajar-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">المستوى الدراسي</label>
+                        <select id="admin-res-level" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-hajar-500">
+                            <option value="bac">قسم البكالوريا (BAC)</option>
+                            <option value="secondary2">السنة الثانية ثانوي (2AS)</option>
+                            <option value="secondary1">السنة الأولى ثانوي (1AS)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">نوع المحتوى</label>
+                        <select id="admin-res-vip" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-hajar-500">
+                            <option value="false">مجاني للجميع 🟢</option>
+                            <option value="true">خاص بالمسجلين 🔒</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">وصف قصير للملف</label>
+                    <input type="text" id="admin-res-desc" required placeholder="شرح مختصر لمحتوى الملف والتمارين..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-hajar-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">حجم الملف / ملاحظة</label>
+                        <input type="text" id="admin-res-size" placeholder="مثال: 3.5 MB" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-hajar-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">رابط التحميل (PDF Link)</label>
+                        <input type="text" id="admin-res-link" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-hajar-500">
+                    </div>
+                </div>
+
+                <div class="flex space-x-2 space-x-reverse pt-2">
+                    <button type="submit" id="admin-save-btn" class="flex-1 py-2.5 bg-hajar-600 hover:bg-hajar-700 text-white rounded-xl font-bold text-xs transition">حفظ الدرس</button>
+                    <button type="button" onclick="resetAdminForm()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-bold text-xs transition">إلغاء</button>
+                </div>
+            </form>
+
+            <!-- Existing Resources List for Quick Delete/Edit -->
+            <div class="space-y-2">
+                <h4 class="text-xs font-bold text-slate-500 uppercase">قائمة الدروس الحالية:</h4>
+                <div id="admin-resource-list" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Quiz Section -->
     <section id="quiz" class="py-20 bg-gradient-to-br from-hajar-900 via-purple-950 to-slate-900 text-white relative overflow-hidden">
@@ -492,7 +517,7 @@
         © 2026 المنصة التعليمية للأستاذة هاجر بوشن. جميع الحقوق محفوظة.
     </footer>
 
-    <!-- AUTHENTICATION MODAL (Glassmorphism Modal) -->
+    <!-- AUTHENTICATION MODAL -->
     <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-purple-100">
             <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">✕</button>
@@ -544,7 +569,7 @@
         </div>
     </div>
 
-    <!-- PROFILE / DASHBOARD MODAL -->
+    <!-- PROFILE / MULTI-ACCOUNT MODAL -->
     <div id="profile-modal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-purple-100">
             <button onclick="closeProfileModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">✕</button>
@@ -566,9 +591,15 @@
                 </div>
             </div>
 
-            <button onclick="handleLogout()" class="w-full py-3 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl font-bold text-sm transition">
-                تسجيل الخروج من الحساب
-            </button>
+            <div class="space-y-2">
+                <button onclick="switchAccount()" class="w-full py-3 bg-hajar-600 hover:bg-hajar-700 text-white rounded-xl font-bold text-sm transition flex items-center justify-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span>تبديل الحساب / إضافة حساب جديد</span>
+                </button>
+                <button onclick="handleLogout()" class="w-full py-2.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl font-bold text-xs transition">
+                    تسجيل الخروج
+                </button>
+            </div>
         </div>
     </div>
 
@@ -593,20 +624,19 @@
 
     <!-- FIREBASE MODULE & LOGIC -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global Environment variables fallback
+        // Environment variables fallback
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'prof-hajar-math-app';
-        const firebaseConfig = {
-            apiKey: "AIzaSyD8awxpzVHjOArsWN-ospGPJ_wBoo2reiI",
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "AIzaSyDemoConfigForHajarMathPageOnly",
             authDomain: "prof-hajar-math.firebaseapp.com",
             projectId: "prof-hajar-math",
-            storageBucket: "prof-hajar-math.firebasestorage.app",
-            messagingSenderId: "969146298128",
-            appId: "1:969146298128:web:5f4eb3ca91052a4499ff95",
-            measurementId: "G-7VH1V1RLYC"
+            storageBucket: "prof-hajar-math.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -614,9 +644,8 @@
         const db = getFirestore(app);
 
         let currentUser = null;
-        let userScore = parseInt(localStorage.getItem('hajar_math_score') || '0');
+        let userScore = 0;
 
-        // Auth State Observer
         window.onload = async () => {
             try {
                 const result = await getRedirectResult(auth);
@@ -624,12 +653,16 @@
                     showToast("تم تسجيل الدخول بـ Google بنجاح 🎉");
                 }
             } catch (err) {
-                console.log("Redirect result check:", err);
+                console.log("Redirect check:", err);
+            }
+
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                try { await signInWithCustomToken(auth, __initial_auth_token); } catch(e) {}
             }
 
             onAuthStateChanged(auth, async (user) => {
                 currentUser = user;
-                if (user) {
+                if (user && !user.isAnonymous) {
                     document.getElementById('auth-logged-out').classList.add('hidden');
                     document.getElementById('auth-logged-in').classList.remove('hidden');
                     document.getElementById('auth-logged-in').classList.add('flex');
@@ -651,19 +684,18 @@
 
         async function loadUserData(uid) {
             try {
-                const userDocRef = doc(db, 'users', uid);
+                const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', uid);
                 const docSnap = await getDoc(userDocRef);
                 if (docSnap.exists()) {
-                    userScore = docSnap.data().score || userScore;
+                    userScore = docSnap.data().score || 0;
                 } else {
-                    await setDoc(userDocRef, { score: userScore, email: currentUser ? currentUser.email : '', createdAt: new Date() }, { merge: true });
+                    userScore = 0;
+                    await setDoc(userDocRef, { score: 0, email: currentUser ? currentUser.email : '', createdAt: new Date() });
                 }
-                localStorage.setItem('hajar_math_score', userScore);
                 document.getElementById('user-score-badge').innerText = `🏆 ${userScore} نقطة`;
                 document.getElementById('quiz-score').innerText = `النقاط المخزنة: ${userScore}`;
             } catch(e) {
-                document.getElementById('user-score-badge').innerText = `🏆 ${userScore} نقطة`;
-                document.getElementById('quiz-score').innerText = `النقاط المخزنة: ${userScore}`;
+                console.log("Local score mode");
             }
         }
 
@@ -672,31 +704,15 @@
             provider.setCustomParameters({ prompt: 'select_account' });
             
             try {
-                const res = await signInWithPopup(auth, provider);
-                if (res && res.user) {
-                    closeAuthModal();
-                    showToast("تم تسجيل الدخول بـ Google بنجاح 🎉");
-                }
+                await signInWithPopup(auth, provider);
+                closeAuthModal();
+                showToast("تم تسجيل الدخول بـ Google بنجاح 🎉");
             } catch(e) {
-                console.warn("Popup error:", e);
-                // إذا كان الخطأ بسبب الغاء المستخدم أو منع popup، نجرب التوجيه
-                if (e.code === 'auth/popup-blocked' || e.code === 'auth/popup-closed-by-user') {
-                    try {
-                        await signInWithRedirect(auth, provider);
-                    } catch(errRedirect) {
-                        showToast("تعذر الدخول. يرجى السماح بالنوافذ المنبثقة.");
-                    }
-                } else if (e.code === 'auth/unauthorized-domain') {
-                    showToast("النطاق غير معتمد في Firebase Console. يمكنك التسجيل بالبريد أو كضيف.");
-                } else {
-                    // الدخول الاحتياطي السريع كضيف لتجنب التعطيل
-                    try {
-                        await signInAnonymously(auth);
-                        closeAuthModal();
-                        showToast("تم الدخول كـ تلميذ ضيف بنجاح 🌟");
-                    } catch(errAnon) {
-                        showToast("حدث خطأ: " + (e.message || "يرجى التجربة بالبريد الإلكتروني"));
-                    }
+                console.warn("Popup blocked, trying redirect:", e);
+                try {
+                    await signInWithRedirect(auth, provider);
+                } catch(errRedirect) {
+                    showToast("يرجى تأكيد دومين Netlify في قائمة Authorized Domains بـ Firebase.");
                 }
             }
         };
@@ -720,7 +736,7 @@
                 }
                 closeAuthModal();
             } catch(err) {
-                showToast("خطأ في البيانات أو كلمة المرور!");
+                showToast("خطأ في البريد الإلكتروني أو كلمة المرور!");
             }
         };
 
@@ -730,16 +746,22 @@
             showToast("تم تسجيل الخروج بنجاح");
         };
 
+        window.switchAccount = async () => {
+            await signOut(auth);
+            closeProfileModal();
+            openAuthModal('login');
+            showToast("يمكنك الآن اختيار أو إضافة حساب جديد 🔄");
+        };
+
         window.saveQuizScore = async (addedPoints) => {
             userScore += addedPoints;
-            localStorage.setItem('hajar_math_score', userScore);
             document.getElementById('quiz-score').innerText = `النقاط المخزنة: ${userScore}`;
             document.getElementById('user-score-badge').innerText = `🏆 ${userScore} نقطة`;
 
-            if (currentUser) {
+            if (currentUser && !currentUser.isAnonymous) {
                 try {
-                    const userDocRef = doc(db, 'users', currentUser.uid);
-                    await setDoc(userDocRef, { score: userScore }, { merge: true });
+                    const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid);
+                    await updateDoc(userDocRef, { score: userScore });
                 } catch(e){}
             }
         };
@@ -747,6 +769,172 @@
 
     <!-- UI Helper Scripts -->
     <script>
+        // Lessons Manager State & Logic
+        let defaultResources = [
+            {
+                id: 'res-1',
+                title: 'سلسلة المتتاليات العددية والبرهان بالتراجع',
+                desc: 'تتضمن تمارينات متدرجة الصعوبة لتعلم طرق إثبات التراجع واستنتاج الاتجاه والنهايات.',
+                level: 'bac',
+                isVip: false,
+                size: 'BAC - 2.8 MB',
+                link: '#'
+            },
+            {
+                id: 'res-2',
+                title: 'الملخص الشامل والحل النموذجي للدوال الأسية واللوغاريتمية',
+                desc: 'شرح تفصيلي مع حلول مواضيع البكالوريات الوطنية والأجنبية السابقة بالتنقيط.',
+                level: 'bac',
+                isVip: true,
+                size: 'BAC - 4.5 MB',
+                link: '#'
+            },
+            {
+                id: 'res-3',
+                title: 'سلسلة التحدي والتميز في الاشتقاقية (2 ثانوي)',
+                desc: 'تمارين متقدمة جداً لاختبار الجاهزية وتحصيل العلامات الكاملة.',
+                level: 'secondary2',
+                isVip: true,
+                size: '2AS - 3.1 MB',
+                link: '#'
+            }
+        ];
+
+        let resourcesData = JSON.parse(localStorage.getItem('hajar_resources')) || defaultResources;
+
+        function renderResources() {
+            const grid = document.getElementById('resource-grid');
+            const adminList = document.getElementById('admin-resource-list');
+            if (!grid) return;
+
+            grid.innerHTML = '';
+            if (adminList) adminList.innerHTML = '';
+
+            resourcesData.forEach(res => {
+                // Main site display
+                const card = document.createElement('div');
+                card.className = `resource-item ${res.level} ${res.isVip ? 'bg-purple-50/50 border-hajar-200' : 'bg-slate-50 border-purple-100'} rounded-2xl p-6 border hover:shadow-lg transition`;
+                
+                const badge = res.isVip 
+                    ? `<span class="text-xs font-bold text-hajar-800 bg-hajar-200 px-3 py-1 rounded-full"><i class="fa-solid fa-star ml-1"></i> حصري للمسجلين</span>`
+                    : `<span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock-open ml-1"></i> مجاني للجميع</span>`;
+
+                const btn = res.isVip
+                    ? `<button onclick="protectedAction('${res.title}', '${res.desc}')" class="px-3.5 py-2 rounded-xl bg-hajar-600 hover:bg-hajar-700 text-white font-bold text-xs transition flex items-center shadow-md shadow-hajar-500/20"><i class="fa-solid fa-key ml-1.5"></i> فتح التحميل</button>`
+                    : `<button onclick="openPdfModal('${res.title}', '${res.desc}')" class="px-3.5 py-2 rounded-xl bg-hajar-100 text-hajar-700 hover:bg-hajar-600 hover:text-white font-bold text-xs transition flex items-center"><i class="fa-solid fa-download ml-1.5"></i> تحميل السلسلة</button>`;
+
+                card.innerHTML = `
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl ${res.isVip ? 'bg-hajar-100 text-hajar-700' : 'bg-rose-100 text-rose-600'} flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid ${res.isVip ? 'fa-file-shield' : 'fa-file-pdf'}"></i>
+                        </div>
+                        ${badge}
+                    </div>
+                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">${res.title}</h4>
+                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">${res.desc}</p>
+                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
+                        <span class="text-[11px] font-semibold text-slate-400">${res.size || 'PDF'}</span>
+                        ${btn}
+                    </div>
+                `;
+                grid.appendChild(card);
+
+                // Admin list rendering
+                if (adminList) {
+                    const adminRow = document.createElement('div');
+                    adminRow.className = "flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 text-xs";
+                    adminRow.innerHTML = `
+                        <div class="truncate max-w-[200px]">
+                            <span class="font-bold block text-slate-800 truncate">${res.title}</span>
+                            <span class="text-[10px] text-slate-400">${res.level} | ${res.isVip ? 'خاص' : 'مجاني'}</span>
+                        </div>
+                        <div class="flex items-center space-x-1 space-x-reverse">
+                            <button onclick="editResource('${res.id}')" class="px-2 py-1 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 font-bold" title="تعديل"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deleteResource('${res.id}')" class="px-2 py-1 bg-rose-100 text-rose-700 rounded-lg hover:bg-rose-200 font-bold" title="حذف"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                    adminList.appendChild(adminRow);
+                }
+            });
+        }
+
+        function openAdminModal() {
+            resetAdminForm();
+            renderResources();
+            document.getElementById('admin-modal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        function resetAdminForm() {
+            document.getElementById('admin-resource-id').value = '';
+            document.getElementById('admin-res-title').value = '';
+            document.getElementById('admin-res-desc').value = '';
+            document.getElementById('admin-res-size').value = '';
+            document.getElementById('admin-res-link').value = '';
+            document.getElementById('admin-form-title').innerText = "إضافة درس / سلسلة جديدة";
+            document.getElementById('admin-save-btn').innerText = "حفظ الدرس";
+        }
+
+        function handleSaveResource(e) {
+            e.preventDefault();
+            const id = document.getElementById('admin-resource-id').value;
+            const title = document.getElementById('admin-res-title').value;
+            const level = document.getElementById('admin-res-level').value;
+            const isVip = document.getElementById('admin-res-vip').value === 'true';
+            const desc = document.getElementById('admin-res-desc').value;
+            const size = document.getElementById('admin-res-size').value || 'PDF';
+            const link = document.getElementById('admin-res-link').value || '#';
+
+            if (id) {
+                const index = resourcesData.findIndex(r => r.id === id);
+                if (index !== -1) {
+                    resourcesData[index] = { id, title, level, isVip, desc, size, link };
+                    showToast("تم تعديل الدرس بنجاح ✨");
+                }
+            } else {
+                const newRes = {
+                    id: 'res-' + Date.now(),
+                    title, level, isVip, desc, size, link
+                };
+                resourcesData.unshift(newRes);
+                showToast("تم إضافة الدرس الجديد بنجاح 🚀");
+            }
+
+            localStorage.setItem('hajar_resources', JSON.stringify(resourcesData));
+            resetAdminForm();
+            renderResources();
+        }
+
+        function editResource(id) {
+            const res = resourcesData.find(r => r.id === id);
+            if (!res) return;
+
+            document.getElementById('admin-resource-id').value = res.id;
+            document.getElementById('admin-res-title').value = res.title;
+            document.getElementById('admin-res-level').value = res.level;
+            document.getElementById('admin-res-vip').value = res.isVip ? 'true' : 'false';
+            document.getElementById('admin-res-desc').value = res.desc;
+            document.getElementById('admin-res-size').value = res.size || '';
+            document.getElementById('admin-res-link').value = res.link || '';
+
+            document.getElementById('admin-form-title').innerText = "تعديل الدرس المختار";
+            document.getElementById('admin-save-btn').innerText = "تحديث البيانات";
+        }
+
+        function deleteResource(id) {
+            resourcesData = resourcesData.filter(r => r.id !== id);
+            localStorage.setItem('hajar_resources', JSON.stringify(resourcesData));
+            renderResources();
+            showToast("تم حذف الدرس بنجاح");
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderResources();
+        });
+
         window.isSignupMode = false;
 
         function openAuthModal(mode) {
@@ -802,6 +990,7 @@
 
             document.getElementById('profile-modal-name').innerText = name;
             document.getElementById('profile-modal-avatar').src = avatar;
+            document.getElementById('profile-modal-score').innerText = document.getElementById('user-score-badge').innerText.replace('🏆 ', '').replace(' نقطة', '');
             document.getElementById('profile-modal').classList.remove('hidden');
         }
 
@@ -837,6 +1026,11 @@
             setTimeout(() => toast.classList.add('hidden'), 3500);
         }
 
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
         function handleFormSubmit(e) {
             e.preventDefault();
             showToast("تم إرسال رسالتك بنجاح للأستاذة هاجر بوشن!");
@@ -847,7 +1041,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Quiz Interactive Handler
+        // Quiz Interactive Logic
         const quizData = [
             { question: "ما هي القيمة الممكنة لـ ln(e^3)؟", options: ["3", "e", "1"], correct: 0 },
             { question: "مشتقة الدالة f(x) = x² + 3x هي:", options: ["2x + 3", "x + 3", "2x"], correct: 0 },
