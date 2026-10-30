@@ -178,11 +178,11 @@
                     <!-- Stats Quick View -->
                     <div class="pt-8 grid grid-cols-3 gap-4 border-t border-purple-100 max-w-md mx-auto md:mx-0">
                         <div class="bg-white/60 backdrop-blur-sm p-3 rounded-2xl border border-purple-50">
-                            <div class="text-2xl sm:text-3xl font-black text-hajar-700">+45,000</div>
-                            <div class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1">تلميذ مستفيد</div>
+                            <div id="stat-students-count" class="text-2xl sm:text-3xl font-black text-hajar-700">0</div>
+                            <div class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1">تلميذ مسجل</div>
                         </div>
                         <div class="bg-white/60 backdrop-blur-sm p-3 rounded-2xl border border-purple-50">
-                            <div class="text-2xl sm:text-3xl font-black text-hajar-700">+180</div>
+                            <div id="stat-resources-count" class="text-2xl sm:text-3xl font-black text-hajar-700">0</div>
                             <div class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1">سلسلة وملخص PDF</div>
                         </div>
                         <div class="bg-white/60 backdrop-blur-sm p-3 rounded-2xl border border-purple-50">
@@ -390,8 +390,9 @@
                         <input type="text" id="admin-res-size" placeholder="مثال: 3.5 MB" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-hajar-500">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">رابط التحميل (PDF Link)</label>
-                        <input type="text" id="admin-res-link" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-hajar-500">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">اختر ملف PDF من حاسوبك 📂</label>
+                        <input type="file" id="admin-res-file" accept="application/pdf" onchange="handleFileUpload(event)" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-hajar-100 file:text-hajar-700 hover:file:bg-hajar-200 cursor-pointer">
+                        <input type="hidden" id="admin-res-link" value="#">
                     </div>
                 </div>
 
@@ -575,43 +576,59 @@
             <button onclick="closeProfileModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">✕</button>
 
             <div class="text-center mb-6">
-                <img id="profile-modal-avatar" src="" alt="Avatar" class="w-20 h-20 rounded-2xl mx-auto mb-3 object-cover border-2 border-hajar-500 shadow-md">
-                <h3 id="profile-modal-name" class="text-xl font-black text-slate-900"></h3>
-                <p id="profile-modal-email" class="text-xs text-slate-500"></p>
+                <img id="user-avatar" src="https://placehold.co/100x100/701a75/ffffff?text=U" alt="Avatar" class="w-20 h-20 rounded-2xl mx-auto mb-3 object-cover border-2 border-hajar-500 shadow-md">
+                <h3 id="user-display-name" class="text-xl font-black text-slate-900">حساب التلميذ</h3>
+                <span id="user-score-badge" class="inline-block mt-1 text-xs font-bold bg-hajar-100 text-hajar-700 px-3 py-1 rounded-full">🏆 0 نقطة</span>
             </div>
 
-            <div class="bg-hajar-50 rounded-2xl p-4 border border-hajar-100 mb-6 grid grid-cols-2 gap-4 text-center">
-                <div>
-                    <span class="block text-2xl font-black text-hajar-700" id="profile-modal-score">0</span>
-                    <span class="text-xs text-slate-500 font-semibold">مجموع النقاط</span>
-                </div>
-                <div>
-                    <span class="block text-2xl font-black text-fuchsia-600" id="profile-modal-status">نشط 🟢</span>
-                    <span class="text-xs text-slate-500 font-semibold">حالة الحساب</span>
-                </div>
-            </div>
-
-            <div class="space-y-2">
-                <button onclick="switchAccount()" class="w-full py-3 bg-hajar-600 hover:bg-hajar-700 text-white rounded-xl font-bold text-sm transition flex items-center justify-center space-x-2 space-x-reverse">
+            <div class="space-y-3">
+                <button onclick="switchAccount()" class="w-full py-3 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl font-bold text-sm transition flex items-center justify-center space-x-2 space-x-reverse">
                     <i class="fa-solid fa-users-gear"></i>
-                    <span>تبديل الحساب / إضافة حساب جديد</span>
+                    <span>تبديل الحساب / حساب آخر</span>
                 </button>
-                <button onclick="handleLogout()" class="w-full py-2.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl font-bold text-xs transition">
-                    تسجيل الخروج
+                <button onclick="handleLogout()" class="w-full py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl font-bold text-sm transition flex items-center justify-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-power-off"></i>
+                    <span>تسجيل الخروج</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- PDF Modal -->
-    <div id="pdf-modal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
-            <button onclick="closePdfModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold">✕</button>
-            <div class="w-14 h-14 rounded-2xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-2xl font-bold mb-4"><i class="fa-solid fa-file-arrow-down"></i></div>
-            <h3 id="modal-title" class="text-xl font-bold text-slate-900 mb-2">عنوان الملف</h3>
-            <p id="modal-desc" class="text-slate-600 text-sm mb-6">تفاصيل الملف المختار...</p>
-            <div class="flex space-x-3 space-x-reverse">
-                <button onclick="closePdfModal(); showToast('جاري التحميل...')" class="flex-1 py-3 bg-hajar-600 text-white rounded-xl font-bold text-sm text-center">تحميل الملف (PDF)</button>
+    <!-- PDF Viewer & Download Modal -->
+    <div id="pdf-modal" class="fixed inset-0 z-50 hidden bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-5xl w-full h-[92vh] p-4 sm:p-6 shadow-2xl relative flex flex-col justify-between border border-purple-100">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-10 h-10 rounded-xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-title" class="text-base sm:text-lg font-bold text-slate-900 truncate max-w-xs sm:max-w-md">عنوان الملف</h3>
+                        <p id="modal-desc" class="text-slate-500 text-xs truncate max-w-xs sm:max-w-md">تفاصيل الملف المختار...</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <button id="modal-download-btn" onclick="downloadCurrentPdf()" class="px-4 py-2 bg-hajar-600 hover:bg-hajar-700 text-white rounded-xl font-bold text-xs transition flex items-center shadow-md shadow-hajar-500/20">
+                        <i class="fa-solid fa-download ml-1.5"></i>
+                        <span>تحميل (PDF)</span>
+                    </button>
+                    <button onclick="closePdfModal()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold transition">✕</button>
+                </div>
+            </div>
+
+            <!-- In-Page Embedded PDF Viewer (Renders Directly Here) -->
+            <div class="flex-1 w-full bg-slate-900 rounded-2xl overflow-hidden relative border border-slate-700 flex flex-col items-center justify-center">
+                <iframe id="pdf-frame" class="w-full h-full rounded-2xl border-0 hidden" title="عرض الملف"></iframe>
+                
+                <!-- Fallback info if empty -->
+                <div id="pdf-fallback" class="flex flex-col items-center justify-center p-6 bg-white rounded-2xl border border-purple-100 shadow-sm max-w-md w-full text-center">
+                    <div class="w-20 h-20 rounded-3xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-4xl mb-4 shadow-inner">
+                        <i class="fa-solid fa-file-circle-exclamation"></i>
+                    </div>
+                    <h4 id="fallback-file-name" class="text-lg font-bold text-slate-900 mb-2">لم يتم إرفاق ملف بعد 📄</h4>
+                    <p class="text-slate-500 text-xs leading-relaxed mb-6">يمكنك رفع ملف PDF جديد عبر زر "إدارة المحتوى".</p>
+                </div>
             </div>
         </div>
     </div>
@@ -621,6 +638,101 @@
         <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
         <span id="toast-msg">تمت العملية بنجاح</span>
     </div>
+
+    <script>
+        // Global Toast Notification Helper
+        window.showToast = function(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            if (toast && toastMsg) {
+                toastMsg.innerText = message;
+                toast.classList.remove('hidden');
+                setTimeout(() => toast.classList.add('hidden'), 3500);
+            }
+        };
+
+        // --- GLOBAL AUTH UI FUNCTIONS ---
+        let isSignupMode = false;
+
+        window.openAuthModal = function(mode) {
+            isSignupMode = mode === 'signup';
+            window.updateModalUI();
+            const modal = document.getElementById('auth-modal');
+            if (modal) modal.classList.remove('hidden');
+        };
+
+        window.closeAuthModal = function() {
+            const modal = document.getElementById('auth-modal');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        window.toggleAuthMode = function() {
+            isSignupMode = !isSignupMode;
+            window.updateModalUI();
+        };
+
+        window.updateModalUI = function() {
+            const title = document.getElementById('auth-modal-title');
+            const submitBtn = document.getElementById('auth-submit-btn');
+            const nameContainer = document.getElementById('name-field-container');
+            const toggleText = document.getElementById('auth-toggle-text');
+            const toggleBtn = document.getElementById('auth-toggle-btn');
+
+            if (isSignupMode) {
+                if (title) title.innerText = "إنشاء حساب تلميذ جديد";
+                if (submitBtn) submitBtn.innerText = "إنشاء الحساب";
+                if (nameContainer) nameContainer.classList.remove('hidden');
+                if (toggleText) toggleText.innerText = "لديك حساب بالفعل؟";
+                if (toggleBtn) toggleBtn.innerText = "تسجيل الدخول";
+            } else {
+                if (title) title.innerText = "تسجيل دخول التلميذ";
+                if (submitBtn) submitBtn.innerText = "تسجيل الدخول";
+                if (nameContainer) nameContainer.classList.add('hidden');
+                if (toggleText) toggleText.innerText = "ليس لديك حساب؟";
+                if (toggleBtn) toggleBtn.innerText = "إنشاء حساب جديد";
+            }
+        };
+
+        window.openProfileModal = function() {
+            const modal = document.getElementById('profile-modal');
+            if (modal) modal.classList.remove('hidden');
+        };
+
+        window.closeProfileModal = function() {
+            const modal = document.getElementById('profile-modal');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        window.toggleMobileMenu = function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) mobileMenu.classList.toggle('hidden');
+        };
+
+        // Count trackers
+        window.incrementStudentCount = function() {
+            const countEl = document.getElementById('stat-students-count');
+            if (countEl) {
+                let current = parseInt(localStorage.getItem('hajar_student_count') || '12', 10);
+                current += 1;
+                localStorage.setItem('hajar_student_count', current.toString());
+                countEl.innerText = current;
+            }
+        };
+
+        window.updateResourceCount = function(count) {
+            const resEl = document.getElementById('stat-resources-count');
+            if (resEl) resEl.innerText = count;
+        };
+
+        // Initial setup for dynamic stats
+        document.addEventListener('DOMContentLoaded', () => {
+            const countEl = document.getElementById('stat-students-count');
+            if (countEl) {
+                const stored = localStorage.getItem('hajar_student_count') || '12';
+                countEl.innerText = stored;
+            }
+        });
+    </script>
 
     <!-- FIREBASE MODULE & LOGIC -->
     <script type="module">
@@ -645,6 +757,22 @@
 
         let currentUser = null;
         let userScore = 0;
+
+        window.switchAccount = async function() {
+            window.closeProfileModal();
+            if (auth) {
+                await signOut(auth);
+            }
+            window.openAuthModal('login');
+        };
+
+        window.handleLogout = async function() {
+            if (auth) {
+                await signOut(auth);
+            }
+            window.closeProfileModal();
+            window.showToast("تم تسجيل الخروج بنجاح");
+        };
 
         window.onload = async () => {
             try {
@@ -691,6 +819,7 @@
                 } else {
                     userScore = 0;
                     await setDoc(userDocRef, { score: 0, email: currentUser ? currentUser.email : '', createdAt: new Date() });
+                    window.incrementStudentCount();
                 }
                 document.getElementById('user-score-badge').innerText = `🏆 ${userScore} نقطة`;
                 document.getElementById('quiz-score').innerText = `النقاط المخزنة: ${userScore}`;
@@ -699,213 +828,249 @@
             }
         }
 
+        let isAuthInProgress = false;
+
         window.handleGoogleSignIn = async () => {
+            if (isAuthInProgress) return;
+            isAuthInProgress = true;
+
             const provider = new GoogleAuthProvider();
-            provider.setCustomParameters({ prompt: 'select_account' });
-            
+            provider.setCustomParameters({ 
+                prompt: 'select_account',
+                auth_type: 'rerequest'
+            });
+
+            const submitBtn = document.getElementById('auth-submit-btn');
             try {
+                // منع التداخل وإظهار مؤشر الانتظار
+                window.showToast("جاري فتح حسابات Google... ⏳");
                 await signInWithPopup(auth, provider);
-                closeAuthModal();
-                showToast("تم تسجيل الدخول بـ Google بنجاح 🎉");
+                window.closeAuthModal();
+                window.incrementStudentCount();
+                window.showToast("تم تسجيل الدخول بـ Google بنجاح 🎉");
             } catch(e) {
-                console.warn("Popup blocked, trying redirect:", e);
-                try {
-                    await signInWithRedirect(auth, provider);
-                } catch(errRedirect) {
-                    showToast("يرجى تأكيد دومين Netlify في قائمة Authorized Domains بـ Firebase.");
+                console.warn("Google popup interrupted or blocked:", e);
+                // إذا تم إلغاء النافذة أو حظرها، نلجأ للتوجيه المباشر بدون إحداث وميض في الواجهة
+                if (e.code === 'auth/popup-blocked' || e.code === 'auth/popup-closed-by-user') {
+                    try {
+                        await signInWithRedirect(auth, provider);
+                    } catch(errRedirect) {
+                        window.showToast("تعذر فتح الحسابات، يرجى المحاولة لاحقاً.");
+                    }
+                } else if (e.code !== 'auth/cancelled-popup-request') {
+                    window.showToast("تم إلغاء عملية تسجيل الدخول.");
                 }
+            } finally {
+                isAuthInProgress = false;
             }
         };
 
         window.handleEmailAuth = async (e) => {
             e.preventDefault();
-            const email = document.getElementById('auth-email').value;
+            const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value;
-            const name = document.getElementById('auth-name').value;
+            const name = document.getElementById('auth-name') ? document.getElementById('auth-name').value.trim() : '';
 
             try {
-                if (window.isSignupMode) {
+                if (isSignupMode) {
                     const res = await createUserWithEmailAndPassword(auth, email, password);
                     if (name) {
                         await updateProfile(res.user, { displayName: name });
                     }
-                    showToast("تم إنشاء حسابك بنجاح! مرحباً بك 🌟");
+                    window.incrementStudentCount();
+                    window.showToast("تم إنشاء حسابك بنجاح! مرحباً بك 🌟");
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
-                    showToast("أهلاً بعودتك! تم تسجيل الدخول 🚀");
+                    window.showToast("أهلاً بعودتك! تم تسجيل الدخول 🚀");
                 }
-                closeAuthModal();
+                window.closeAuthModal();
             } catch(err) {
-                showToast("خطأ في البريد الإلكتروني أو كلمة المرور!");
-            }
-        };
-
-        window.handleLogout = async () => {
-            await signOut(auth);
-            closeProfileModal();
-            showToast("تم تسجيل الخروج بنجاح");
-        };
-
-        window.switchAccount = async () => {
-            await signOut(auth);
-            closeProfileModal();
-            openAuthModal('login');
-            showToast("يمكنك الآن اختيار أو إضافة حساب جديد 🔄");
-        };
-
-        window.saveQuizScore = async (addedPoints) => {
-            userScore += addedPoints;
-            document.getElementById('quiz-score').innerText = `النقاط المخزنة: ${userScore}`;
-            document.getElementById('user-score-badge').innerText = `🏆 ${userScore} نقطة`;
-
-            if (currentUser && !currentUser.isAnonymous) {
-                try {
-                    const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid);
-                    await updateDoc(userDocRef, { score: userScore });
-                } catch(e){}
+                console.error(err);
+                if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
+                    window.showToast("⚠️ لم يتم العثور على حساب بهذا البريد! يرجى إنشاء حساب جديد أولاً.");
+                } else if (err.code === 'auth/wrong-password') {
+                    window.showToast("⚠️ كلمة المرور غير صحيحة!");
+                } else if (err.code === 'auth/email-already-in-use') {
+                    window.showToast("⚠️ البريد الإلكتروني مستخدم بالفعل! يمكنك تسجيل الدخول مباشرة.");
+                } else if (err.code === 'auth/weak-password') {
+                    window.showToast("⚠️ كلمة المرور ضعيفة! يرجى إدخال 6 أحرف أو أرقام على الأقل.");
+                } else {
+                    window.showToast("حدث خطأ أثناء الاتصال: " + (err.message || 'يرجى التحقق من البيانات'));
+                }
             }
         };
     </script>
 
-    <!-- UI Helper Scripts -->
+    <!-- RESOURCES & LESSON MANAGEMENT SCRIPT -->
     <script>
-        // Lessons Manager State & Logic
-        let defaultResources = [
+        let resourcesData = JSON.parse(localStorage.getItem('hajar_resources_data')) || [
             {
-                id: 'res-1',
-                title: 'سلسلة المتتاليات العددية والبرهان بالتراجع',
-                desc: 'تتضمن تمارينات متدرجة الصعوبة لتعلم طرق إثبات التراجع واستنتاج الاتجاه والنهايات.',
+                id: '1',
+                title: 'سلسلة المتتاليات العددية (الجزء الأول)',
+                desc: 'سلسلة متكاملة تشمل تمارين البرهان بالتراجع والتعامل مع الحدود.',
                 level: 'bac',
                 isVip: false,
-                size: 'BAC - 2.8 MB',
+                size: '2.7 MB',
                 link: '#'
             },
             {
-                id: 'res-2',
-                title: 'الملخص الشامل والحل النموذجي للدوال الأسية واللوغاريتمية',
-                desc: 'شرح تفصيلي مع حلول مواضيع البكالوريات الوطنية والأجنبية السابقة بالتنقيط.',
+                id: '2',
+                title: 'الحل النموذجي المميّز للدوال الأسية واللوغاريتمية',
+                desc: 'شرح وحل تفصيلي بالخطوات لسلاسل الدوال الشاملة مع سلم التنقيط.',
                 level: 'bac',
                 isVip: true,
-                size: 'BAC - 4.5 MB',
+                size: '4.1 MB',
                 link: '#'
             },
             {
-                id: 'res-3',
+                id: '3',
                 title: 'سلسلة التحدي والتميز في الاشتقاقية (2 ثانوي)',
                 desc: 'تمارين متقدمة جداً لاختبار الجاهزية وتحصيل العلامات الكاملة.',
                 level: 'secondary2',
                 isVip: true,
-                size: '2AS - 3.1 MB',
+                size: '3.0 MB',
                 link: '#'
             }
         ];
 
-        let resourcesData = JSON.parse(localStorage.getItem('hajar_resources')) || defaultResources;
+        let currentFilter = 'all';
+        let currentPdfLink = '';
+        let currentPdfTitle = '';
 
         function renderResources() {
             const grid = document.getElementById('resource-grid');
-            const adminList = document.getElementById('admin-resource-list');
             if (!grid) return;
-
             grid.innerHTML = '';
-            if (adminList) adminList.innerHTML = '';
 
-            resourcesData.forEach(res => {
-                // Main site display
+            const filtered = resourcesData.filter(item => currentFilter === 'all' || item.level === currentFilter);
+
+            window.updateResourceCount(resourcesData.length);
+
+            filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = `resource-item ${res.level} ${res.isVip ? 'bg-purple-50/50 border-hajar-200' : 'bg-slate-50 border-purple-100'} rounded-2xl p-6 border hover:shadow-lg transition`;
-                
-                const badge = res.isVip 
-                    ? `<span class="text-xs font-bold text-hajar-800 bg-hajar-200 px-3 py-1 rounded-full"><i class="fa-solid fa-star ml-1"></i> حصري للمسجلين</span>`
+                card.className = `resource-item ${item.level} bg-white rounded-2xl p-6 border border-purple-100 hover:shadow-lg transition flex flex-col justify-between`;
+
+                const badge = item.isVip
+                    ? `<span class="text-xs font-bold text-hajar-800 bg-hajar-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock ml-1"></i> محتوى للمسجلين</span>`
                     : `<span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock-open ml-1"></i> مجاني للجميع</span>`;
 
-                const btn = res.isVip
-                    ? `<button onclick="protectedAction('${res.title}', '${res.desc}')" class="px-3.5 py-2 rounded-xl bg-hajar-600 hover:bg-hajar-700 text-white font-bold text-xs transition flex items-center shadow-md shadow-hajar-500/20"><i class="fa-solid fa-key ml-1.5"></i> فتح التحميل</button>`
-                    : `<button onclick="openPdfModal('${res.title}', '${res.desc}')" class="px-3.5 py-2 rounded-xl bg-hajar-100 text-hajar-700 hover:bg-hajar-600 hover:text-white font-bold text-xs transition flex items-center"><i class="fa-solid fa-download ml-1.5"></i> تحميل السلسلة</button>`;
+                const actionBtn = item.isVip
+                    ? `<button onclick="protectedAction('${item.title.replace(/'/g, "\\'")}', '${item.desc.replace(/'/g, "\\'")}', '${item.link}')" class="px-3.5 py-2 rounded-xl bg-hajar-600 hover:bg-hajar-700 text-white font-bold text-xs transition flex items-center shadow-md shadow-hajar-500/20">
+                            <i class="fa-solid fa-key ml-1.5"></i> فتح الملف
+                       </button>`
+                    : `<button onclick="openPdfModal('${item.title.replace(/'/g, "\\'")}', '${item.desc.replace(/'/g, "\\'")}', '${item.link}')" class="px-3.5 py-2 rounded-xl bg-hajar-100 text-hajar-700 hover:bg-hajar-600 hover:text-white font-bold text-xs transition flex items-center">
+                            <i class="fa-solid fa-eye ml-1.5"></i> عرض وتحميل
+                       </button>`;
 
                 card.innerHTML = `
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-12 h-12 rounded-xl ${res.isVip ? 'bg-hajar-100 text-hajar-700' : 'bg-rose-100 text-rose-600'} flex items-center justify-center text-xl font-bold">
-                            <i class="fa-solid ${res.isVip ? 'fa-file-shield' : 'fa-file-pdf'}"></i>
+                    <div>
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-hajar-100 text-hajar-700 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid ${item.isVip ? 'fa-file-shield' : 'fa-file-pdf'}"></i>
+                            </div>
+                            ${badge}
                         </div>
-                        ${badge}
+                        <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">${item.title}</h4>
+                        <p class="text-xs text-slate-500 mb-6 leading-relaxed">${item.desc}</p>
                     </div>
-                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-2">${res.title}</h4>
-                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">${res.desc}</p>
-                    <div class="flex items-center justify-between border-t border-slate-200/60 pt-4">
-                        <span class="text-[11px] font-semibold text-slate-400">${res.size || 'PDF'}</span>
-                        ${btn}
+                    <div class="flex items-center justify-between border-t border-slate-100 pt-4 mt-2">
+                        <span class="text-[11px] font-semibold text-slate-400">${item.size || 'PDF'}</span>
+                        ${actionBtn}
                     </div>
                 `;
                 grid.appendChild(card);
-
-                // Admin list rendering
-                if (adminList) {
-                    const adminRow = document.createElement('div');
-                    adminRow.className = "flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 text-xs";
-                    adminRow.innerHTML = `
-                        <div class="truncate max-w-[200px]">
-                            <span class="font-bold block text-slate-800 truncate">${res.title}</span>
-                            <span class="text-[10px] text-slate-400">${res.level} | ${res.isVip ? 'خاص' : 'مجاني'}</span>
-                        </div>
-                        <div class="flex items-center space-x-1 space-x-reverse">
-                            <button onclick="editResource('${res.id}')" class="px-2 py-1 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 font-bold" title="تعديل"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="deleteResource('${res.id}')" class="px-2 py-1 bg-rose-100 text-rose-700 rounded-lg hover:bg-rose-200 font-bold" title="حذف"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                    adminList.appendChild(adminRow);
-                }
             });
         }
 
-        function openAdminModal() {
-            resetAdminForm();
+        function filterResources(cat) {
+            currentFilter = cat;
             renderResources();
+        }
+
+        function openAdminModal() {
             document.getElementById('admin-modal').classList.remove('hidden');
+            renderAdminResourceList();
         }
 
         function closeAdminModal() {
             document.getElementById('admin-modal').classList.add('hidden');
+            resetAdminForm();
         }
 
-        function resetAdminForm() {
-            document.getElementById('admin-resource-id').value = '';
-            document.getElementById('admin-res-title').value = '';
-            document.getElementById('admin-res-desc').value = '';
-            document.getElementById('admin-res-size').value = '';
-            document.getElementById('admin-res-link').value = '';
-            document.getElementById('admin-form-title').innerText = "إضافة درس / سلسلة جديدة";
-            document.getElementById('admin-save-btn').innerText = "حفظ الدرس";
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.type !== 'application/pdf') {
+                window.showToast("⚠️ يرجى اختيار ملف بصيغة PDF فقط!");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('admin-res-link').value = e.target.result;
+                const sizeMB = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+                document.getElementById('admin-res-size').value = sizeMB;
+                window.showToast("تم رفع وتجهيز الملف بنجاح 📄");
+            };
+            reader.readAsDataURL(file);
         }
 
         function handleSaveResource(e) {
             e.preventDefault();
             const id = document.getElementById('admin-resource-id').value;
-            const title = document.getElementById('admin-res-title').value;
+            const title = document.getElementById('admin-res-title').value.trim();
             const level = document.getElementById('admin-res-level').value;
             const isVip = document.getElementById('admin-res-vip').value === 'true';
-            const desc = document.getElementById('admin-res-desc').value;
-            const size = document.getElementById('admin-res-size').value || 'PDF';
+            const desc = document.getElementById('admin-res-desc').value.trim();
+            const size = document.getElementById('admin-res-size').value.trim() || 'PDF';
             const link = document.getElementById('admin-res-link').value || '#';
 
             if (id) {
-                const index = resourcesData.findIndex(r => r.id === id);
-                if (index !== -1) {
-                    resourcesData[index] = { id, title, level, isVip, desc, size, link };
-                    showToast("تم تعديل الدرس بنجاح ✨");
+                const idx = resourcesData.findIndex(r => r.id === id);
+                if (idx !== -1) {
+                    resourcesData[idx] = { id, title, level, isVip, desc, size, link };
                 }
             } else {
                 const newRes = {
-                    id: 'res-' + Date.now(),
-                    title, level, isVip, desc, size, link
+                    id: Date.now().toString(),
+                    title,
+                    level,
+                    isVip,
+                    desc,
+                    size,
+                    link
                 };
                 resourcesData.unshift(newRes);
-                showToast("تم إضافة الدرس الجديد بنجاح 🚀");
             }
 
-            localStorage.setItem('hajar_resources', JSON.stringify(resourcesData));
-            resetAdminForm();
+            localStorage.setItem('hajar_resources_data', JSON.stringify(resourcesData));
             renderResources();
+            renderAdminResourceList();
+            resetAdminForm();
+            window.showToast("تم حفظ الدرس/السلسلة بنجاح ✨");
+        }
+
+        function renderAdminResourceList() {
+            const list = document.getElementById('admin-resource-list');
+            if (!list) return;
+            list.innerHTML = '';
+
+            resourcesData.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex items-center justify-between p-2.5 bg-white rounded-xl border border-slate-200 text-xs';
+                itemDiv.innerHTML = `
+                    <div class="truncate max-w-[240px]">
+                        <span class="font-bold text-slate-800 block truncate">${item.title}</span>
+                        <span class="text-[10px] text-slate-400">${item.level} | ${item.isVip ? 'مسجلين' : 'مجاني'}</span>
+                    </div>
+                    <div class="flex items-center space-x-1 space-x-reverse">
+                        <button onclick="editResource('${item.id}')" class="p-1.5 bg-amber-100 text-amber-700 hover:bg-amber-200 rounded-lg font-bold"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteResource('${item.id}')" class="p-1.5 bg-rose-100 text-rose-700 hover:bg-rose-200 rounded-lg font-bold"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                list.appendChild(itemDiv);
+            });
         }
 
         function editResource(id) {
@@ -917,123 +1082,93 @@
             document.getElementById('admin-res-level').value = res.level;
             document.getElementById('admin-res-vip').value = res.isVip ? 'true' : 'false';
             document.getElementById('admin-res-desc').value = res.desc;
-            document.getElementById('admin-res-size').value = res.size || '';
-            document.getElementById('admin-res-link').value = res.link || '';
+            document.getElementById('admin-res-size').value = res.size;
+            document.getElementById('admin-res-link').value = res.link;
 
-            document.getElementById('admin-form-title').innerText = "تعديل الدرس المختار";
+            document.getElementById('admin-form-title').innerText = "تعديل بيانات الدرس الحالي";
             document.getElementById('admin-save-btn').innerText = "تحديث البيانات";
         }
 
         function deleteResource(id) {
-            resourcesData = resourcesData.filter(r => r.id !== id);
-            localStorage.setItem('hajar_resources', JSON.stringify(resourcesData));
-            renderResources();
-            showToast("تم حذف الدرس بنجاح");
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderResources();
-        });
-
-        window.isSignupMode = false;
-
-        function openAuthModal(mode) {
-            window.isSignupMode = mode === 'signup';
-            updateModalUI();
-            document.getElementById('auth-modal').classList.remove('hidden');
-        }
-
-        function closeAuthModal() {
-            document.getElementById('auth-modal').classList.add('hidden');
-        }
-
-        function toggleAuthMode() {
-            window.isSignupMode = !window.isSignupMode;
-            updateModalUI();
-        }
-
-        function updateModalUI() {
-            const title = document.getElementById('auth-modal-title');
-            const submitBtn = document.getElementById('auth-submit-btn');
-            const nameContainer = document.getElementById('name-field-container');
-            const toggleText = document.getElementById('auth-toggle-text');
-            const toggleBtn = document.getElementById('auth-toggle-btn');
-
-            if (window.isSignupMode) {
-                title.innerText = "إنشاء حساب تلميذ جديد";
-                submitBtn.innerText = "إنشاء الحساب";
-                nameContainer.classList.remove('hidden');
-                toggleText.innerText = "لديك حساب بالفعل؟";
-                toggleBtn.innerText = "تسجيل الدخول";
-            } else {
-                title.innerText = "تسجيل دخول التلميذ";
-                submitBtn.innerText = "تسجيل الدخول";
-                nameContainer.classList.add('hidden');
-                toggleText.innerText = "ليس لديك حساب؟";
-                toggleBtn.innerText = "إنشاء حساب جديد";
+            if (confirm("هل أنت تأكد من رغبتك في حذف هذا الملف؟")) {
+                resourcesData = resourcesData.filter(r => r.id !== id);
+                localStorage.setItem('hajar_resources_data', JSON.stringify(resourcesData));
+                renderResources();
+                renderAdminResourceList();
+                window.showToast("تم حذف الدرس بنجاح");
             }
         }
 
-        function protectedAction(title, desc) {
+        function resetAdminForm() {
+            document.getElementById('admin-resource-id').value = '';
+            document.getElementById('admin-res-title').value = '';
+            document.getElementById('admin-res-desc').value = '';
+            document.getElementById('admin-res-size').value = '';
+            document.getElementById('admin-res-link').value = '#';
+            document.getElementById('admin-res-file').value = '';
+            document.getElementById('admin-form-title').innerText = "إضافة درس / سلسلة جديدة";
+            document.getElementById('admin-save-btn').innerText = "حفظ الدرس";
+        }
+
+        function protectedAction(title, desc, link) {
             const loggedInContainer = document.getElementById('auth-logged-in');
-            if (loggedInContainer.classList.contains('hidden')) {
-                showToast("🔒 هذا المحتوى خاص بالمسجلين! يرجى تسجيل الدخول أولاً.");
-                openAuthModal('login');
+            if (loggedInContainer && loggedInContainer.classList.contains('hidden')) {
+                window.showToast("🔒 هذا المحتوى خاص بالمسجلين! يرجى تسجيل الدخول أولاً.");
+                window.openAuthModal('login');
             } else {
-                openPdfModal(title, desc);
+                openPdfModal(title, desc, link);
             }
         }
 
-        function openProfileModal() {
-            const name = document.getElementById('user-display-name').innerText;
-            const avatar = document.getElementById('user-avatar').src;
-
-            document.getElementById('profile-modal-name').innerText = name;
-            document.getElementById('profile-modal-avatar').src = avatar;
-            document.getElementById('profile-modal-score').innerText = document.getElementById('user-score-badge').innerText.replace('🏆 ', '').replace(' نقطة', '');
-            document.getElementById('profile-modal').classList.remove('hidden');
-        }
-
-        function closeProfileModal() {
-            document.getElementById('profile-modal').classList.add('hidden');
-        }
-
-        function openPdfModal(title, desc) {
+        function openPdfModal(title, desc, link) {
+            currentPdfLink = link || '#';
+            currentPdfTitle = title;
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-desc').innerText = desc;
+
+            const iframe = document.getElementById('pdf-frame');
+            const fallback = document.getElementById('pdf-fallback');
+
+            if (link && link !== '#') {
+                iframe.src = link;
+                iframe.classList.remove('hidden');
+                fallback.classList.add('hidden');
+            } else {
+                iframe.src = '';
+                iframe.classList.add('hidden');
+                fallback.classList.remove('hidden');
+                document.getElementById('fallback-file-name').innerText = title;
+            }
+
             document.getElementById('pdf-modal').classList.remove('hidden');
         }
 
         function closePdfModal() {
-            document.getElementById('pdf-modal').classList.add('hidden');
+            const modal = document.getElementById('pdf-modal');
+            if (modal) modal.classList.add('hidden');
+            const iframe = document.getElementById('pdf-frame');
+            if (iframe) iframe.src = '';
+            currentPdfLink = '';
+            currentPdfTitle = '';
         }
 
-        function filterResources(category) {
-            const items = document.querySelectorAll('.resource-item');
-            items.forEach(item => {
-                if (category === 'all' || item.classList.contains(category)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-msg').innerText = message;
-            toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 3500);
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+        function downloadCurrentPdf() {
+            if (!currentPdfLink || currentPdfLink === '#') {
+                window.showToast("⚠️ لا يوجد ملف مرفق للتحميل مباشرة.");
+                return;
+            }
+            const a = document.createElement('a');
+            a.href = currentPdfLink;
+            a.download = `${currentPdfTitle || 'Math-Lesson'}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.showToast("جاري تحميل الملف... 📥");
         }
 
         function handleFormSubmit(e) {
             e.preventDefault();
-            showToast("تم إرسال رسالتك بنجاح للأستاذة هاجر بوشن!");
+            window.showToast("تم إرسال رسالتك بنجاح للأستاذة هاجر بوشن!");
             e.target.reset();
         }
 
@@ -1041,7 +1176,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Quiz Interactive Logic
+        // Quiz Interactive Handler
         const quizData = [
             { question: "ما هي القيمة الممكنة لـ ln(e^3)؟", options: ["3", "e", "1"], correct: 0 },
             { question: "مشتقة الدالة f(x) = x² + 3x هي:", options: ["2x + 3", "x + 3", "2x"], correct: 0 },
@@ -1058,7 +1193,6 @@
             if (index === quizData[currentQ].correct) {
                 feedback.innerText = "إجابة صحيحة! أحسنت 🌟 تم إضافة 10 نقاط لحسابك.";
                 feedback.className = "mt-6 p-4 rounded-xl text-center font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
-                window.saveQuizScore(10);
             } else {
                 feedback.innerText = "إجابة خاطئة! الإجابة الصحيحة هي: " + quizData[currentQ].options[quizData[currentQ].correct];
                 feedback.className = "mt-6 p-4 rounded-xl text-center font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30";
@@ -1100,6 +1234,11 @@
                 document.getElementById('quiz-feedback').classList.add('hidden');
             }
         }
+
+        // Initialize resource grid on load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderResources();
+        });
     </script>
 </body>
 </html>
